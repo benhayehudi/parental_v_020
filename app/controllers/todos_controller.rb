@@ -20,6 +20,7 @@ class TodosController < ApplicationController
   end
 
   def show
+    @todo = Todo.find_by(params[:id])
   end
 
   def update

@@ -1,5 +1,4 @@
 <div class="panel panel-default">
-
   <div class="panel-heading">
     <h3 class="panel-title">sign up</h3>
   </div>
@@ -18,10 +17,11 @@
       <%= f.label :password_confirmation %>
       <%= f.password_field :password_confirmation %>
       <br>
-      <%= f.submit "sign up" %>
+      <%= f.submit "sign up", :class => 'btn btn-primary' %>
     <% end %>
     <br>
-    <%= link_to('log in with facebook', '/auth/facebook') %>
+    <%= link_to '/auth/facebook' do %>
+      <%= image_tag("facebook_login_button.png", :width => 300) %>
+    <% end %>
   </div>
-
 </div>

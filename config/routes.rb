@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   resources :parents, only: [:index, :update] do
     resources :todos, only: [:index, :new, :create, :show, :destroy, :update]
   end
-  
+
   resources :todos, only: [:index, :new, :create, :show, :destroy, :update] do
     resources :tasks, only: [:new, :create, :destroy, :update]
   end

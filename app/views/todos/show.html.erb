@@ -1,0 +1,11 @@
+<div class="panel panel-default">
+
+  <div class="panel-heading">
+    <h3 class="panel-title"><%= @todo.title %></h3>
+  </div>
+
+  <div class="panel-body">
+    <h3>details:</h3>
+    created on: <%= @todo.created_at.strftime('%B %d, %Y (%A)').downcase %>
+
+  </div>
