@@ -44,11 +44,11 @@
 # Controllers & Routes:
 
 ## RegistrationsController
-### Sign Up
+### Sign Up (DONE)
 
 ## SessionsController
-### Login
-### Logout
+### Login (DONE)
+### Logout (DONE)
 
 ## TodosController
 ### Add Todos & Tasks
