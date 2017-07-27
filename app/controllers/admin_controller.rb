@@ -17,7 +17,7 @@ class AdminController < ApplicationController
   def update
     current_parent.update(parent_params)
     current_parent.save
-    redirect_to edit_admin_path(current_parent)
+    redirect_to admin_path(current_parent)
   end
 
   def destroy
