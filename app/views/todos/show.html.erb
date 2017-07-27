@@ -32,25 +32,27 @@
         <%= 'no tasks for this todo yet' %>
       <% else %>
         <% current_user.tasks.each do |task| %>
-          <%= task.title unless task.done == true %> ~ <em>done?</em>
-            <%= form_for(todo_task_path(task)) do |f| %>
-              <%= f.label 'y' %><%= f.check_box :done, {}, true %>
-              <%= f.label 'n' %><%= f.check_box :done, {}, false %>
-              <%= f.hidden_field :task_id, :value => task.id %>
-              <%= f.submit 'mark done', :class => 'btn btn-primary btn-xs' %>
+          <% if task.done == false %>
+            <%= task.title %> ~ <em>done?</em>
+              <%= form_for(task, url: todo_task_path(task)) do |f| %>
+                <%= f.label 'y' %><%= f.radio_button :done, "true" %>
+                <%= f.label 'n' %><%= f.radio_button :done, "false" %>
+                <%= f.hidden_field :task_id, :value => task.id %>
+                <%= f.submit 'mark done', :class => 'btn btn-primary btn-xs' %>
+              <% end %>
+            <br>
             <% end %>
-          <br>
+          <% end %>
         <% end %>
-      <% end %>
 
     <br>
 
     <h4>are you done?</h4>
     <%= form_for(@todo) do |f| %>
       <%= f.label "yes?" %>
-      <%= f.check_box :done, {}, true %>
+      <%= f.radio_button :done, "true" %>
       <%= f.label "no?" %>
-      <%= f.check_box :done, {}, false %>
+      <%= f.radio_button :done, "false" %>
       <br>
       <%= f.submit 'mark done', :class => 'btn btn-primary' %>
     <% end %>

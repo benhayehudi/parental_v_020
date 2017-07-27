@@ -17,8 +17,10 @@
     <br><br>
     <h4>your todo list</h4>
       <% @todos.each do |todo| %>
-        <strong><%= link_to todo.title, todo_path(todo) %></strong>
-        <br>
+        <% if todo.done == false %>
+          <strong><%= link_to todo.title, todo_path(todo) %></strong>
+          <br>
+        <% end %>
       <% end %>
     <br><br>
     <%= link_to "Log Out", logout_path %>
