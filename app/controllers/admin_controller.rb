@@ -18,7 +18,7 @@ class AdminController < ApplicationController
   end
 
   def current_parent
-    @parent = Parent.find_by(:id: params[:id])
+    @parent = Parent.find_by(id: params[:id])
   end
 
 end
