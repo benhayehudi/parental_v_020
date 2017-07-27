@@ -1,7 +1,7 @@
 class TodosController < ApplicationController
 
   def index
-    @parent = Parent.find_by(params[:id])
+    @parent = current_user
     @todo = @parent.todos.build
     @todos = all_todos(@parent)
   end
@@ -12,7 +12,7 @@ class TodosController < ApplicationController
   end
 
   def create
-    @parent = Parent.find_by(params[:id])
+    @parent = current_user
     @todo = @parent.todos.build(todo_params)
     @todo.parent_id = @parent.id
     @todo.save
@@ -20,12 +20,13 @@ class TodosController < ApplicationController
   end
 
   def show
-    @todo = Todo.find_by(id: params[:id])
+    find_todo(@todo)
+    @tasks = current_user.tasks.where(todo_id: params[:id])
     @task = @todo.tasks.build
   end
 
   def update
-    @todo = Todo.find_by(id: params[:id])
+    find_todo(@todo)
     @todo.update(todo_params)
     @todo.save
     if @todo.done == false
@@ -42,6 +43,10 @@ class TodosController < ApplicationController
 
   def todo_params
     params.require(:todo).permit!
+  end
+
+  def find_todo(todo)
+    @todo = Todo.find_by(id: params[:id])
   end
 
   def all_todos(parent)

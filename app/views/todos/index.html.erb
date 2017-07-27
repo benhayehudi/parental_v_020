@@ -1,11 +1,12 @@
 <div class="panel panel-default">
 
   <div class="panel-heading">
-    <h3 class="panel-title">welcome</h3>
+
+    <h3 class="panel-title">welcome.</h3>
   </div>
 
   <div class="panel-body">
-    <img src="<%= current_user.image %>"><em>hi, <%= current_user.name.split(' ').first.downcase %>. what would you like to do?</em>
+    <img src="<%= current_user.image %>">&nbsp;<em>hi, <%= current_user.name.split(' ').first.downcase %>. what would you like to do?</em>
     <br><br>
     <h4>add something to do</h4>
     <%= form_for([@parent, @todo]) do |f| %>
@@ -14,7 +15,9 @@
         <%= t.hidden_field :parent_id, :value => current_user.id %>
       <% end %>
     <% end %>
+
     <br><br>
+
     <h4>your todo list</h4>
       <% @todos.each do |todo| %>
         <% if todo.done == false %>
@@ -23,6 +26,7 @@
         <% end %>
       <% end %>
     <br><br>
+
     <%= link_to "Log Out", logout_path %>
 
   </div>

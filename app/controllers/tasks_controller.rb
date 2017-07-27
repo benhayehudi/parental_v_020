@@ -19,8 +19,9 @@ class TasksController < ApplicationController
   end
 
   def update
-    @task = current_user.tasks.find_by(id: params[:task][:task_id])
-    @task.update_attributes(task_params)
+    @parent = current_user
+    @task = @parent.tasks.find_by(id: params[:task][:task_id])
+    @task.update(done: params[:task][:done])
     @task.save
     redirect_to request.referrer
   end
@@ -28,6 +29,6 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title, :parent_id, :todo_id, :id, :done)
+    params.require(:task).permit(:title, :parent_id, :todo_id, :id, :task, :done)
   end
 end

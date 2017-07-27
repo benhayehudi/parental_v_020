@@ -28,19 +28,18 @@
         <%= f.submit 'add task', :class => 'btn btn-primary btn-sm' %>
       <% end %>
       <br>
-      <% if current_user.tasks.empty? %>
+      <% if @tasks.empty? %>
         <%= 'no tasks for this todo yet' %>
       <% else %>
-        <% current_user.tasks.each do |task| %>
+        <% @tasks.each do |task| %>
           <% if task.done == false %>
             <%= task.title %> ~ <em>done?</em>
-              <%= form_for(task, url: todo_task_path(task)) do |f| %>
+              <%= form_for(task, :url => todo_task_path(@todo.id, task.id)) do |f| %>
                 <%= f.label 'y' %><%= f.radio_button :done, "true" %>
                 <%= f.label 'n' %><%= f.radio_button :done, "false" %>
                 <%= f.hidden_field :task_id, :value => task.id %>
                 <%= f.submit 'mark done', :class => 'btn btn-primary btn-xs' %>
               <% end %>
-            <br>
             <% end %>
           <% end %>
         <% end %>
