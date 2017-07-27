@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170727174812) do
+ActiveRecord::Schema.define(version: 20170727210555) do
 
   create_table "parents", force: :cascade do |t|
     t.string "name"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20170727174812) do
     t.datetime "updated_at", null: false
     t.string "image"
     t.string "uid"
+    t.boolean "admin", default: false, null: false
   end
 
   create_table "tasks", force: :cascade do |t|
