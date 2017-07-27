@@ -21,7 +21,7 @@
     id number: <%= current_parent.id %>
 
     <br><br>
-    <%= link_to 'edit this user', admin_edit_path %>
+    <%= link_to 'edit this user', edit_admin_path(current_parent) %>
     <br>
     <%= link_to 'return to all users', admin_index_path %>
   </div>
