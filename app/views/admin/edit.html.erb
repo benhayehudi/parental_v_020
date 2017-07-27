@@ -16,6 +16,9 @@
       <br>
       <%= f.submit 'submit', :class => 'btn btn-primary' %>
     <% end %>
+    <br><br>
     <%= link_to("delete user", admin_path, method: :delete, class: 'btn btn-danger') %>
-
+    <br>
+    <%= link_to 'return to all users', admin_index_path %>
+    <br><br>
   </div>
