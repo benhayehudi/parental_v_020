@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   end
 
   resources :admin, only: [:index, :show, :edit, :update, :destroy]
-  get '/admin/:id/edit' => 'admin#update'
+  post '/admin/:id/edit' => 'admin#update'
 
   post '/todos/new' => 'todos#create'
   post '/todos/:id/tasks/:id' => 'tasks#update'
