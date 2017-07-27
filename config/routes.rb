@@ -19,6 +19,7 @@ Rails.application.routes.draw do
 
   resources :admin, only: [:index, :show, :edit, :update, :destroy]
   post '/admin/:id/edit' => 'admin#update'
+  post '/parents/:id' => 'admin#update'
 
   post '/todos/new' => 'todos#create'
   post '/todos/:id/tasks/:id' => 'tasks#update'
