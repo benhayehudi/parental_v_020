@@ -20,10 +20,19 @@ class TodosController < ApplicationController
   end
 
   def show
-    @todo = Todo.find_by(params[:id])
+    @todo = Todo.find_by(id: params[:id])
+    @task = @todo.tasks.build
   end
 
   def update
+    @todo = Todo.find_by(id: params[:id])
+    @todo.update(todo_params)
+    @todo.save
+    if @todo.done == false
+      redirect_to request.referrer
+    else
+      redirect_to todos_path(current_user)
+    end
   end
 
   def destroy

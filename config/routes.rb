@@ -17,4 +17,5 @@ Rails.application.routes.draw do
     resources :tasks, only: [:new, :create, :destroy, :update]
   end
   post '/todos/new' => 'todos#create'
+  post '/todos/:id' => 'tasks#update'
 end

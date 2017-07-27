@@ -1,11 +1,62 @@
 <div class="panel panel-default">
 
   <div class="panel-heading">
-    <h3 class="panel-title"><%= @todo.title %></h3>
+    <h3 class="panel-title"><%= @todo.title %> ~ added: <%= @todo.created_at.strftime('%B %d, %Y').downcase %></h3>
   </div>
 
   <div class="panel-body">
-    <h3>details:</h3>
-    created on: <%= @todo.created_at.strftime('%B %d, %Y (%A)').downcase %>
+    <% if @todo.description.nil? || @todo.description.empty? %>
+      <%= form_for(@todo) do |f| %>
+        <%= f.label :description, "add some info" %>
+        <br>
+        <%= f.text_area :description %>
+        <br>
+        <%= f.submit 'add description', :class => 'btn btn-primary' %>
+      <% end %>
+    <% else %>
+      <h4>some info:</h4>
+      <%= @todo.description %>
+    <% end %>
+
+    <br><br>
+
+    <h4>what do you need to do?</h4>
+      <%= form_for([@todo, @task]) do |f| %>
+        <%= f.text_field :title, :placeholder => 'what needs to get done?', size: 22 %>
+        <%= f.hidden_field :parent_id, :value => current_user.id %>
+        <%= f.hidden_field :todo_id, :value => @todo.id %>
+        <%= f.submit 'add task', :class => 'btn btn-primary btn-sm' %>
+      <% end %>
+      <br>
+      <% if current_user.tasks.empty? %>
+        <%= 'no tasks for this todo yet' %>
+      <% else %>
+        <% current_user.tasks.each do |task| %>
+          <%= task.title unless task.done == true %> ~ <em>done?</em>
+            <%= form_for(todo_task_path(task)) do |f| %>
+              <%= f.label 'y' %><%= f.check_box :done, {}, true %>
+              <%= f.label 'n' %><%= f.check_box :done, {}, false %>
+              <%= f.hidden_field :task_id, :value => task.id %>
+              <%= f.submit 'mark done', :class => 'btn btn-primary btn-xs' %>
+            <% end %>
+          <br>
+        <% end %>
+      <% end %>
+
+    <br>
+
+    <h4>are you done?</h4>
+    <%= form_for(@todo) do |f| %>
+      <%= f.label "yes?" %>
+      <%= f.check_box :done, {}, true %>
+      <%= f.label "no?" %>
+      <%= f.check_box :done, {}, false %>
+      <br>
+      <%= f.submit 'mark done', :class => 'btn btn-primary' %>
+    <% end %>
 
   </div>
+
+  <div class="panel-body">
+  <%= link_to 'return to your todos', todos_path %>
+</div>
