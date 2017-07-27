@@ -18,4 +18,7 @@ Rails.application.routes.draw do
   end
   post '/todos/new' => 'todos#create'
   post '/todos/:id/tasks/:id' => 'tasks#update'
+
+  get '/about' => 'welcome#about'
+  get '/contact' => 'welcome#contact'
 end
