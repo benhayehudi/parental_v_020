@@ -1,0 +1,23 @@
+<div class="panel panel-default">
+
+  <div class="panel-heading">
+
+    <h3 class="panel-title">viewing <%= @parent.name %></h3>
+  </div>
+
+  <div class="panel-body">
+
+    <h4><%= @parent.name.split(' ').first.downcase %>'s info:</h4>
+    <% if @parent.image == nil %>
+      No Image Provided
+      <br>
+    <% else %>
+      <% @parent.image %>
+      <br>
+    <% end %>
+    Email: <%= @parent.email %>
+    <br>
+    Account Created On: <%= @parent.created_at.strftime('%B %d, %Y').downcase %>
+    <br>
+    
+  </div>
