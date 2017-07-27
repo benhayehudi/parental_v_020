@@ -42,13 +42,10 @@
 
             <div class="mastfoot">
               <div class="inner">
-                <% if logged_in? == false %>
+
                   <p><%= link_to 'Login', '/login' %> | <%= link_to 'Signup', '/registrations/new' %> | <%= link_to 'Contact', '/contact' %></p>
                   <p>&copy;2017 <a href="http://www.bengreenberg.org">Ben Greenberg</a></p>
-                <% else %>
-                  <p><%= link_to 'Logout', logout_path %></p>
-                  <p>&copy;2017 <a href="http://www.bengreenberg.org">Ben Greenberg</a></p>
-                <% end %>
+
               </div>
             </div>
 
