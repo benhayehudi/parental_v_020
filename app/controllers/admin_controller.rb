@@ -9,7 +9,12 @@ class AdminController < ApplicationController
     current_parent
   end
 
-  def
+  def edit
+    current_parent
+  end
+
+  def update
+  end
 
   private
 
