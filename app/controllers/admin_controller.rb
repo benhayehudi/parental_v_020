@@ -1,5 +1,6 @@
 class AdminController < ApplicationController
   before_action :is_admin?
+  helper_method :current_parent
 
   def index
     @parents = Parent.all
