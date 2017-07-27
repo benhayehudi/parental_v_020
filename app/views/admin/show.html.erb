@@ -2,22 +2,21 @@
 
   <div class="panel-heading">
 
-    <h3 class="panel-title">viewing <%= @parent.name %></h3>
+    <h3 class="panel-title">viewing <%= @parent.name.downcase %></h3>
   </div>
 
   <div class="panel-body">
 
     <h4><%= @parent.name.split(' ').first.downcase %>'s info:</h4>
-    <% if @parent.image == nil %>
-      No Image Provided
-      <br>
+    <% if @parent.image == nil || @parent.image.empty? %>
+      no image provided
     <% else %>
-      <% @parent.image %>
-      <br>
+      <%= image_tag(@parent.image, :width => 80) %>
     <% end %>
-    Email: <%= @parent.email %>
     <br>
-    Account Created On: <%= @parent.created_at.strftime('%B %d, %Y').downcase %>
+    email: <%= @parent.email %>
     <br>
-    
+    account created on: <%= @parent.created_at.strftime('%B %d, %Y').downcase %>
+    <br>
+
   </div>
