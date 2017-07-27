@@ -6,7 +6,9 @@
 
   <div class="panel-body">
 
-    <% unless @todo.address.empty? || @todo.address.nil? %>
+    <% if @todo.address == nil %>
+      no address supplied
+    <% else %>
       <iframe
         width="200"
         height="150"
