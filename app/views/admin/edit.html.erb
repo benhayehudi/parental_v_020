@@ -7,7 +7,7 @@
 
   <div class="panel-body">
 
-    <%= form_for(parent_path(current_parent), url: admin_path(current_parent), controller: 'admin', action: 'patch') do |f| %>
+    <%= form_for(parent_path, current_parent, url: admin_path(current_parent), controller: 'admin', action: 'patch') do |f| %>
       <%= f.label :name %>
       <%= f.text_field :name %>
       <br>
