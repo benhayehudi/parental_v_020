@@ -6,13 +6,19 @@ class AdminController < ApplicationController
   end
 
   def show
-    @parent = Parent.find_by(id: params[:id])
+    current_parent
   end
+
+  def
 
   private
 
   def is_admin?
     current_user.id == 1 || current.user.admin == true
+  end
+
+  def current_parent
+    @parent = Parent.find_by(:id: params[:id])
   end
 
 end

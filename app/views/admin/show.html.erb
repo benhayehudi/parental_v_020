@@ -2,25 +2,26 @@
 
   <div class="panel-heading">
 
-    <h3 class="panel-title">viewing <%= @parent.name.downcase %></h3>
+    <h3 class="panel-title">viewing <%= current_parent.name.downcase %></h3>
   </div>
 
   <div class="panel-body">
 
-    <h4><%= @parent.name.split(' ').first.downcase %>'s info:</h4>
-    <% if @parent.image == nil || @parent.image.empty? %>
+    <h4><%= current_parent.name.split(' ').first.downcase %>'s info:</h4>
+    <% if current_parent.image == nil || current_parent.image.empty? %>
       no image provided
     <% else %>
-      <%= image_tag(@parent.image, :width => 80) %>
+      <%= image_tag(current_parent.image, :width => 80) %>
     <% end %>
     <br>
-    email: <%= @parent.email %>
+    email: <%= current_parent.email %>
     <br>
-    account created on: <%= @parent.created_at.strftime('%B %d, %Y').downcase %>
+    account created on: <%= current_parent.created_at.strftime('%B %d, %Y').downcase %>
     <br>
-    id number: <%= @parent.id %>
+    id number: <%= current_parent.id %>
 
     <br><br>
-
+    <%= link_to 'edit this user', admin_edit_path %>
+    <br>
     <%= link_to 'return to all users', admin_index_path %>
   </div>
