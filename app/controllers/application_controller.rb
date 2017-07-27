@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   private
 
   def current_user
-    Parent.find(session[:parent_id])
+    Parent.find_by(session[:parent_id])
   end
   helper_method :current_user
 
