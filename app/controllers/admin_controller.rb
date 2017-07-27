@@ -17,6 +17,9 @@ class AdminController < ApplicationController
   def update
   end
 
+  def destroy
+  end
+
   private
 
   def is_admin?
