@@ -11,9 +11,13 @@
     <h4>add something to do</h4>
     <%= form_for([@parent, @todo]) do |f| %>
       <%= f.text_field :title, :placeholder => 'what needs to get done?', size: 22 %>
+      <br>
+      <%= f.text_field :address, :placeholder => 'enter a street address', size: 22 %>
       <%= f.fields_for :tasks do |t| %>
         <%= t.hidden_field :parent_id, :value => current_user.id %>
       <% end %>
+      <br>
+      <%= f.submit "add todo", :class => 'btn btn-primary' %>
     <% end %>
 
     <br><br>

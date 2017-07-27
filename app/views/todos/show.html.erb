@@ -5,6 +5,18 @@
   </div>
 
   <div class="panel-body">
+
+    <% unless @todo.address.empty? || @todo.address.nil? %>
+      <iframe
+        width="200"
+        height="150"
+        frameborder="0" style="border:0"
+        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCkIkw32ps5odw1KNV7wtdteXOyk1B69RE
+        &q=<%= @todo.address %>" allowfullscreen>
+      </iframe>
+    <% end %>
+    <br>
+
     <% if @todo.description.nil? || @todo.description.empty? %>
       <%= form_for(@todo) do |f| %>
         <%= f.label :description, "add some info" %>
@@ -16,6 +28,7 @@
     <% else %>
       <h4>some info:</h4>
       <%= @todo.description %>
+      <br>
     <% end %>
 
     <br><br>
