@@ -15,8 +15,9 @@
       <%= f.email_field :email %>
       <br>
       <%= f.label :admin %>
-      <%= f.radio_button :admin, 'true' %>
-      <%= f.radio_button :admin, 'false' %>
+      <br>
+      <%= f.label 'yes' %><%= f.radio_button :admin, 'true' %>
+      <%= f.label 'no' %><%= f.radio_button :admin, 'false' %>
       <%= f.submit 'submit', :class => 'btn btn-primary' %>
     <% end %>
     <br>
