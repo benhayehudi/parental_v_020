@@ -29,7 +29,11 @@
                 <h3 class="masthead-brand">parental - <em>get stuff done.</em></h3>
                 <nav>
                   <ul class="nav masthead-nav">
-                    <li class="active"><%= link_to 'Home', root_path %></a></li>
+                    <% if logged_in? %>
+                      <li class="active"><%= link_to 'Home', parent_path(current_user) %></li>
+                    <% else %>
+                      <li class="active"><%= link_to 'Home', root_path %></li>
+                    <% end %>
                     <li><a href="/about">About</a></li>
                     <li><a href="/contact">Contact</a></li>
                   </ul>
