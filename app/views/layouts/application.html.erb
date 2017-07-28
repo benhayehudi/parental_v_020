@@ -51,7 +51,7 @@
 
                   <p>
                     <% if logged_in? %>
-                      <%= link_to 'Logout', '/logout' %> | <%= link_to 'Contact', '/contact' %> | <%= link_to 'About', '/about' %></p>
+                      <%= link_to 'Logout', '/logout' %></p>
                     <% else %>
                       <%= link_to 'Login', '/login' %> | <%= link_to 'Signup', '/registrations/new' %> | <%= link_to 'Contact', '/contact' %></p>
                     <% end %>
