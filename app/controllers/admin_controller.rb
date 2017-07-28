@@ -28,7 +28,7 @@ class AdminController < ApplicationController
   private
 
   def parent_params
-    params.require(:parent).permit(:name, :email)
+    params.require(:parent).permit(:name, :email, :admin)
   end
 
   def is_admin?
