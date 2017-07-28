@@ -32,7 +32,7 @@ class AdminController < ApplicationController
   end
 
   def is_admin?
-    current_user.id == 1 || current.user.admin == true
+    current.user.admin == true
   end
 
   def current_parent
