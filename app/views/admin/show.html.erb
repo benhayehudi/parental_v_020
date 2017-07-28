@@ -19,6 +19,16 @@
     account created on: <%= current_parent.created_at.strftime('%B %d, %Y').downcase %>
     <br>
     id number: <%= current_parent.id %>
+    <br><br>
+    todos:
+    <br>
+    <% if current_parent.todos.empty? || current_parent.todos.nil? %>
+      no todos currently
+    <% else %>
+      <% current_parent.todos.each do |todo| %>
+        <%= todo.title %>
+      <% end %>
+    <% end %>
 
     <br><br>
     <%= link_to 'edit this user', edit_admin_path(current_parent) %>
