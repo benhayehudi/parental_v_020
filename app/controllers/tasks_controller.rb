@@ -1,4 +1,6 @@
 class TasksController < ApplicationController
+  before_action :logged_in?
+
   def index
     @todo = Todo.find_by(parent_id: params[:parent_id])
     @task = @todo.tasks.build

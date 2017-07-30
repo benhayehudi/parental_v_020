@@ -29,7 +29,7 @@
                 <h3 class="masthead-brand">parental - <em>get stuff done.</em></h3>
                 <nav>
                   <ul class="nav masthead-nav">
-                    <% if logged_in? %>
+                    <% if current_user %>
                       <li class="active"><%= link_to 'Home', todos_path(current_user) %></li>
                     <% else %>
                       <li class="active"><%= link_to 'Home', root_path %></li>
@@ -50,7 +50,7 @@
               <div class="inner">
 
                   <p>
-                    <% if logged_in? %>
+                    <% if current_user %>
                       <%= link_to 'Logout', '/logout' %></p>
                     <% else %>
                       <%= link_to 'Login', '/login' %> | <%= link_to 'Signup', '/registrations/new' %> | <%= link_to 'Contact', '/contact' %></p>

@@ -1,4 +1,5 @@
 class TodosController < ApplicationController
+  before_action :logged_in?
 
   def index
     @parent = current_user
