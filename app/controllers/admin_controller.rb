@@ -1,5 +1,6 @@
 class AdminController < ApplicationController
   before_action :is_admin?
+  helper_method :current_parent
 
   def index
     @parents = Parent.all
@@ -32,6 +33,10 @@ class AdminController < ApplicationController
 
   def is_admin?
     redirect_to new_session_path if !current_user.admin == true
+  end
+
+  def current_parent
+    @parent = Parent.find_by(id: params[:id])
   end
 
 end
