@@ -32,7 +32,10 @@ class AdminController < ApplicationController
   end
 
   def is_admin?
-    redirect_to new_session_path if !current_user || !current_user.admin == true
+    if current_user && current_user.admin == true
+    else
+      redirect_to new_session_path
+    end
   end
 
   def current_parent
