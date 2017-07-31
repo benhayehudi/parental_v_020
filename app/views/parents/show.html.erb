@@ -1,0 +1,41 @@
+<div class="panel panel-default">
+
+  <div class="panel-heading">
+    <h3 class="panel-title">welcome.</h3>
+  </div>
+
+  <div class="panel-body">
+
+    <img src="<%= current_user.image %>">&nbsp;<em>hi, <%= current_user.name.split(' ').first.downcase %>. what would you like to do?</em>
+
+    <br><br>
+
+    <h4>add something to do</h4>
+    <%= form_for([@parent, @todo]) do |f| %>
+      <%= f.text_field :title, :placeholder => 'what needs to get done?', size: 22 %>
+      <br>
+      <%= f.text_field :address, :placeholder => 'enter a street address', size: 22 %>
+      <br>
+      <%= f.fields_for :tasks do |t| %>
+        <%= t.hidden_field :parent_id, :value => current_user.id %>
+      <% end %>
+      <br>
+      <%= f.submit "add todo", :class => 'btn btn-primary' %>
+    <% end %>
+
+    <br><br>
+
+    <h4>your todo list</h4>
+      <% @todos.each do |todo| %>
+        <% if todo.done == false %>
+          <strong><%= link_to todo.title, parent_todo_path(current_user, todo) %></strong>
+          <br>
+        <% end %>
+      <% end %>
+
+      <br>
+
+      <p><%= link_to 'logout', logout_path %></p>
+  </div>
+
+</div>

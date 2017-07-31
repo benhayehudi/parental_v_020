@@ -9,7 +9,7 @@ class RegistrationsController < ApplicationController
     @parent = Parent.new(parent_params)
     if @parent.save
       session[:user_id] = @parent.id
-      redirect_to todos_path(@parent)
+      redirect_to parent_path(@parent)
     else
       flash[:alert] = "signup failed. please try again."
       redirect_to '/registrations/new'
@@ -25,7 +25,7 @@ class RegistrationsController < ApplicationController
     @parent.save
 
     session[:parent_id] = @parent.id
-    redirect_to todos_path(@parent)
+    redirect_to parent_path(@parent)
   end
 
   private

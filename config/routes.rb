@@ -9,12 +9,10 @@ Rails.application.routes.draw do
   post '/login' => 'sessions#create'
   get '/auth/facebook/callback' => 'registrations#facebook'
 
-  resources :parents, only: [:index, :update] do
-    resources :todos, only: [:index, :new, :create, :show, :destroy, :update]
-  end
-
-  resources :todos, only: [:index, :new, :create, :show, :destroy, :update] do
-    resources :tasks, only: [:new, :create, :destroy, :update]
+  resources :parents, only: [:show, :update] do
+    resources :todos, only: [:index, :new, :create, :show, :destroy, :update] do
+      resources :tasks, only: [:new, :create, :destroy, :update]
+    end
   end
 
   resources :admin, only: [:index, :show, :edit, :update, :destroy]

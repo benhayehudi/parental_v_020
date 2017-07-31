@@ -9,7 +9,7 @@
     <% if @todo.address == nil || @todo.address.empty? %>
       no address supplied
       <br>
-      <%= form_for(@todo) do |f| %>
+      <%= form_for([current_user, @todo]) do |f| %>
         <%= f.label :address, "add an address:" %><br>
         <%= f.text_field :address, :placeholder => 'enter a street address', size: 22 %>
         <br>
@@ -28,7 +28,7 @@
     <br>
 
     <% if @todo.description.nil? || @todo.description.empty? %>
-      <%= form_for(@todo) do |f| %>
+      <%= form_for([current_user, @todo]) do |f| %>
         <%= f.label :description, "add some info" %>
         <br>
         <%= f.text_area :description %>
@@ -43,7 +43,7 @@
 
     <br>
 
-    <%= form_for(@todo) do |f| %>
+    <%= form_for([current_user, @todo]) do |f| %>
       <%= f.label :duedate, "needs to get done by?" %>
       <br>
       <% if @todo.duedate.nil? || @todo.duedate.empty? %>
@@ -59,7 +59,7 @@
     <br><br>
 
     <h4>what do you need to do?</h4>
-      <%= form_for([@todo, @task]) do |f| %>
+      <%= form_for([current_user, @todo, @task]) do |f| %>
         <%= f.text_field :title, :placeholder => 'what needs to get done?', size: 22 %>
         <%= f.hidden_field :parent_id, :value => current_user.id %>
         <%= f.hidden_field :todo_id, :value => @todo.id %>
@@ -74,7 +74,7 @@
         <% @tasks.each do |task| %>
           <% if task.done == false %>
             <%= task.title %> ~ <em>done?</em>
-              <%= form_for(task, :url => todo_task_path(@todo.id, task.id)) do |f| %>
+              <%= form_for(task, :url => parent_todo_task_path(@todo.id, task.id)) do |f| %>
                 <%= f.label 'y' %><%= f.radio_button :done, "true" %>
                 <%= f.label 'n' %><%= f.radio_button :done, "false" %>
                 <%= f.hidden_field :task_id, :value => task.id %>
@@ -87,7 +87,7 @@
     <br>
 
     <h4>are you done?</h4>
-    <%= form_for(@todo) do |f| %>
+    <%= form_for([current_user, @todo]) do |f| %>
       <%= f.label "yes?" %>
       <%= f.radio_button :done, "true" %>
       <%= f.label "no?" %>
@@ -99,7 +99,7 @@
   </div>
 
   <div class="panel-body">
-  <%= link_to 'return to your todos', todos_path %>
+  <%= link_to 'return to your todos', parent_todo_path %>
   <br>
   <%= link_to 'logout', logout_path %>
 </div>

@@ -33,7 +33,7 @@ class TodosController < ApplicationController
     if @todo.done == false
       redirect_to request.referrer
     else
-      redirect_to todos_path(current_user)
+      redirect_to parent_path(@todo)
     end
   end
 
