@@ -9,9 +9,8 @@
     <% if @todo.address == nil || @todo.address.empty? %>
       no address supplied
       <br>
-      add an address:
-      <br>
       <%= form_for(@todo) do |f| %>
+        <%= f.label :address, "add some info" %><br>
         <%= f.text_field :address, :placeholder => 'enter a street address', size: 22 %>
         <br>
         <%= f.submit 'submit', :class => 'btn btn-primary' %>
