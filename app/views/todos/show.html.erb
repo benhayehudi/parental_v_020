@@ -45,9 +45,8 @@
 
     <% if @todo.duedate == Date.today %>
       <em>you need to get this done today, <%= current_user.name.split(" ").first.downcase %>!</em>
+      <br><br>
     <% end %>
-
-    <br><br>
 
     <%= form_for([current_user, @todo]) do |f| %>
       <%= f.label :duedate, "needs to get done by?" %>
