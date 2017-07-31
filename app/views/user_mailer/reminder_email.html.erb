@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="parents getting stuff done with parental.">
+    <meta name="author" content="ben greenberg">
+    <title>parental -- get stuff done.</title>
+  </head>
+
+    <body>
+
+      <div class="site-wrapper">
+
+        <div class="site-wrapper-inner">
+
+          <div class="cover-container">
+
+            <div class="masthead clearfix">
+              <div class="inner">
+                <h3 class="masthead-brand">parental - <em>get stuff done.</em></h3>
+                <nav>
+                  <ul class="nav masthead-nav">
+                    <li><a href="http://www.parental.life">Home</a></li>
+                    <li><a href="http://www.parental.life/about">About</a></li>
+                    <li><a href="http://www.parental.life/contact">Contact</a></li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+
+            <div class="inner cover">
+
+              <div class="panel panel-default">
+
+                <div class="panel-heading">
+                  <h3 class="panel-title">reminder: your todo needs to get done</h3>
+                </div>
+
+                <div class="panel-body">
+
+                  <p>
+                    hi <%= @parent.name.split(" ").first.downcase %>,
+
+                    <br><br>
+
+                    you have a todo item coming up due soon. to view the details of what you need to do login at <a href="http://www.parental.life">parental.life</a>.
+
+                    <br><br>
+
+                    best,
+                    <br>
+                    <em>parental.life</em>
+                  </p>
+
+                </div>
+
+            </div>
+
+            <div class="mastfoot">
+              <div class="inner">
+                <p>&copy;2017 <a href="http://www.bengreenberg.org">Ben Greenberg</a>&nbsp;</p>
+
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Bootstrap core JavaScript
+      ================================================== -->
+      <!-- Placed at the end of the document so the pages load faster -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    </body>
+  </html>
+
+</html>

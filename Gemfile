@@ -58,3 +58,4 @@ gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'dotenv-rails'
 gem 'rails_12factor', group: :production
+gem 'sparkpost'
