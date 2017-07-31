@@ -16,9 +16,9 @@
       <br>
       <%= f.text_field :address, :placeholder => 'enter a street address', size: 22 %>
       <br>
-      <%= f.label :duedate, "when does this need to be done?" %>
+      <%= f.label :duedate, "done by?" %>
       <br>
-      <%= f.date_field :duedate, value: Date.today  %>
+      <%= f.date_field :duedate, :placeholder => Date.today  %>
       <%= f.fields_for :tasks do |t| %>
         <%= t.hidden_field :parent_id, :value => current_user.id %>
       <% end %>
