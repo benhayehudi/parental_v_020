@@ -16,7 +16,7 @@
       <br>
       <%= f.text_field :address, :placeholder => 'enter a street address', size: 22 %>
       <br>
-      <%= f.label_for :duedate, "when does this need to be done?" %>
+      <%= f.label :duedate, "when does this need to be done?" %>
       <br>
       <%= f.date_field :duedate, value: Date.today  %>
       <%= f.fields_for :tasks do |t| %>
