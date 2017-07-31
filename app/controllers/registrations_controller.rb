@@ -1,7 +1,6 @@
 require 'securerandom'
 class RegistrationsController < ApplicationController
-
-
+  
   def new
     @parent = Parent.new
   end

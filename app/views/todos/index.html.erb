@@ -1,13 +1,15 @@
 <div class="panel panel-default">
 
   <div class="panel-heading">
-
     <h3 class="panel-title">welcome.</h3>
   </div>
 
   <div class="panel-body">
+
     <img src="<%= current_user.image %>">&nbsp;<em>hi, <%= current_user.name.split(' ').first.downcase %>. what would you like to do?</em>
+
     <br><br>
+
     <h4>add something to do</h4>
     <%= form_for([@parent, @todo]) do |f| %>
       <%= f.text_field :title, :placeholder => 'what needs to get done?', size: 22 %>
@@ -29,7 +31,9 @@
           <br>
         <% end %>
       <% end %>
+
       <br>
+      
       <p><%= link_to 'logout', logout_path %></p>
   </div>
 

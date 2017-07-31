@@ -6,7 +6,7 @@
 
   <div class="panel-body">
 
-    <% if @todo.address == nil %>
+    <% if @todo.address == nil || @todo.address.empty? %>
       no address supplied
     <% else %>
       <iframe
@@ -17,6 +17,7 @@
         &q=<%= @todo.address %>" allowfullscreen>
       </iframe>
     <% end %>
+
     <br>
 
     <% if @todo.description.nil? || @todo.description.empty? %>
@@ -42,7 +43,9 @@
         <%= f.hidden_field :todo_id, :value => @todo.id %>
         <%= f.submit 'add task', :class => 'btn btn-primary btn-sm' %>
       <% end %>
+
       <br>
+
       <% if @tasks.empty? %>
         <%= 'no tasks for this todo yet' %>
       <% else %>

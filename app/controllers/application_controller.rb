@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   private
 
   def current_user
-  @current_user ||= Parent.find_by(id: session[:parent_id])
+    @current_user ||= Parent.find_by(id: session[:parent_id])
   end
   helper_method :current_user
 
@@ -13,6 +13,4 @@ class ApplicationController < ActionController::Base
   def logged_in?
     redirect_to new_session_path if !session[:parent_id]
   end
-
-
 end

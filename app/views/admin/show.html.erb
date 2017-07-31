@@ -1,19 +1,21 @@
 <div class="panel panel-default">
 
   <div class="panel-heading">
-
     <h3 class="panel-title">viewing <%= current_parent.name.downcase %></h3>
   </div>
 
   <div class="panel-body">
 
     <h4><%= current_parent.name.split(' ').first.downcase %>'s info:</h4>
+
     <% if current_parent.image == nil || current_parent.image.empty? %>
       no image provided
     <% else %>
       <%= image_tag(current_parent.image, :width => 80) %>
     <% end %>
+
     <br>
+
     email: <%= current_parent.email %>
     <br>
     account created on: <%= current_parent.created_at.strftime('%B %d, %Y').downcase %>
@@ -21,7 +23,9 @@
     id number: <%= current_parent.id %>
     <br>
     admin: <%= current_parent.admin %>
+
     <br><br>
+
     todos:
     <br>
     <% if current_parent.todos.empty? || current_parent.todos.nil? %>
@@ -33,6 +37,7 @@
     <% end %>
 
     <br><br>
+    
     <%= link_to 'edit this user', edit_admin_path(current_parent) %>
     <br>
     <%= link_to 'return to all users', admin_index_path %>
