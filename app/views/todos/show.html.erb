@@ -8,6 +8,14 @@
 
     <% if @todo.address == nil || @todo.address.empty? %>
       no address supplied
+      <br>
+      add an address:
+      <br>
+      <%= form_for(@todo) do |f| %>
+        <%= f.text_field :address, :placeholder => 'enter a street address', size: 22 %>
+        <br>
+        <%= f.submit 'submit', :class => 'btn btn-primary' %>
+      <% end %>
     <% else %>
       <iframe
         width="200"
