@@ -46,7 +46,7 @@
     <%= form_for([current_user, @todo]) do |f| %>
       <%= f.label :duedate, "needs to get done by?" %>
       <br>
-      <% if @todo.duedate.nil? || @todo.duedate.empty? %>
+      <% if @todo.duedate.nil? %>
         <%= f.date_field :duedate, :value => Date.today  %>
       <% else %>
         <%= f.date_field :duedate, :value => @todo.duedate %>
@@ -99,7 +99,7 @@
   </div>
 
   <div class="panel-body">
-  <%= link_to 'return to your todos', parent_todo_path %>
+  <%= link_to 'return to your todos', parent_path %>
   <br>
   <%= link_to 'logout', logout_path %>
 </div>
