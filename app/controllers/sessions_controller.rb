@@ -10,6 +10,7 @@ class SessionsController < ApplicationController
       session[:parent_id] = @parent.id
       redirect_to todos_path(@parent)
     else
+      flash[:alert] = "login failed. please try again."
       redirect_to new_session_path
     end
   end

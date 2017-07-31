@@ -5,6 +5,13 @@
   </div>
 
   <div class="panel-body">
+
+    <% if flash[:alert] %>
+      <div class="panel-body">
+        <p><%= flash[:alert] %></p>
+      </div>
+    <% end %>
+
     <%= form_tag(sessions_path) do %>
       <%= label_tag :email %>
       <%= text_field_tag :email %>
@@ -14,10 +21,13 @@
       <br>
       <%= submit_tag 'log in', :class => 'btn btn-primary' %>
     <% end %>
+
     <br>
+
     <%= link_to '/auth/facebook' do %>
       <%= image_tag("facebook_login_button.png", :width => 300) %>
     <% end %>
+
     <br>
     <%= link_to('create an account', new_registration_path) %>
   </div>

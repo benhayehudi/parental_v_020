@@ -4,6 +4,13 @@
   </div>
 
   <div class="panel-body">
+
+    <% if flash[:alert] %>
+      <div class="panel-body">
+        <p><%= flash[:alert] %></p>
+      </div>
+    <% end %>
+    
     <%= form_for(@parent, url: new_registration_path(@parent)) do |f| %>
       <%= f.label :name %>
       <%= f.text_field :name %>

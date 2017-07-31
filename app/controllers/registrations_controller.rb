@@ -11,6 +11,7 @@ class RegistrationsController < ApplicationController
       session[:user_id] = @parent.id
       redirect_to todos_path(@parent)
     else
+      flash[:alert] = "signup failed. please try again."
       redirect_to '/registrations/new'
     end
   end
