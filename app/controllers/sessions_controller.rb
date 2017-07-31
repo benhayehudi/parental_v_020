@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
     @parent = Parent.find_by(:email => params[:email])
     if @parent && @parent.authenticate(params[:password])
       session[:parent_id] = @parent.id
-      redirect_to todos_path(@parent)
+      redirect_to todo_path(@parent)
     else
       redirect_to new_session_path
     end

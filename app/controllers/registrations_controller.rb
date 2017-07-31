@@ -1,6 +1,6 @@
 require 'securerandom'
 class RegistrationsController < ApplicationController
-  
+
   def new
     @parent = Parent.new
   end
@@ -9,7 +9,7 @@ class RegistrationsController < ApplicationController
     @parent = Parent.new(parent_params)
     if @parent.save
       session[:user_id] = @parent.id
-      redirect_to todos_path(@parent)
+      redirect_to todo_path(@parent)
     else
       redirect_to '/registrations/new'
     end
@@ -24,7 +24,7 @@ class RegistrationsController < ApplicationController
     @parent.save
 
     session[:parent_id] = @parent.id
-    redirect_to todos_path(@parent)
+    redirect_to todo_path(@parent)
   end
 
   private
