@@ -43,18 +43,19 @@
 
     <br>
 
+    <% if @todo.duedate == Date.today %>
+      you need to get this done today, <%= current_user.name.split(" ").first.downcase %>!
+    <% end %>
+
+    <br>
+
     <%= form_for([current_user, @todo]) do |f| %>
       <%= f.label :duedate, "needs to get done by?" %>
       <br>
-      <% if @todo.duedate.nil? %>
-        <%= f.date_field :duedate, :value => Date.today  %>
-      <% else %>
-        <%= f.date_field :duedate, :value => @todo.duedate %>
-      <% end %>
+      <%= f.date_field :duedate, :value => @todo.duedate %>
       <br>
       <%= f.submit 'add due date', :class => 'btn btn-primary' %>
     <% end %>
-
 
     <br><br>
 
