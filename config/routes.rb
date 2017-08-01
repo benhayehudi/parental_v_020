@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   get '/login' => 'sessions#new'
   post '/login' => 'sessions#create'
   get '/auth/facebook/callback' => 'registrations#facebook'
-  get '/auth/twitter/callback', to: 'registrations#twitter'
+  get '/auth/twitter/callback', to: 'registrations#facebook_or_twitter'
 
   resources :parents, only: [:show, :update] do
     resources :todos, only: [:index, :new, :create, :show, :destroy, :update] do

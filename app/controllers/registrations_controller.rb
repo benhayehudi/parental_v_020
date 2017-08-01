@@ -16,7 +16,7 @@ class RegistrationsController < ApplicationController
     end
   end
 
-  def facebook
+  def facebook_or_twitter
     @parent = Parent.find_or_create_by(uid: auth['uid'])
     @parent.name = auth['info']['name']
     @parent.email = auth['info']['email']
