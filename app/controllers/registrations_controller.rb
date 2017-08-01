@@ -16,7 +16,7 @@ class RegistrationsController < ApplicationController
     end
   end
 
-  def facebook_or_twitter
+  def facebook
     @parent = Parent.find_or_create_by(uid: auth['uid'])
     @parent.name = auth['info']['name']
     @parent.email = auth['info']['email']
@@ -27,6 +27,19 @@ class RegistrationsController < ApplicationController
     session[:parent_id] = @parent.id
     redirect_to parent_path(@parent)
   end
+
+  def twitter
+    @parent = Parent.find_or_create_by(uid: auth['uid'])
+    @parent.name = auth['info']['name']
+    @parent.email = auth['info']['email']
+    @parent.image = auth['info']['image']
+    @parent.password = SecureRandom.hex
+    @parent.save
+
+    session[:parent_id] = @parent.id
+    redirect_to parent_path(@parent)
+  end
+
 
   private
 
