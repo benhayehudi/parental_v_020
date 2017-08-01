@@ -45,7 +45,6 @@ class RegistrationsController < ApplicationController
     else
       session[:parent_id] = @parent.id
       redirect_to parent_path(@parent)
-      raise params.inspect
     end
   end
 
