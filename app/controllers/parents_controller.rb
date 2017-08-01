@@ -2,7 +2,7 @@ class ParentsController < ApplicationController
   before_action :logged_in?
 
   def show
-    @parent = Parent.find_by(uid: auth['uid'])
+    @parent = current_user
     @todos = all_todos(@parent)
     @todo = Todo.find_by(parent_id: params[:id])
     @tasks = current_user.tasks.where(todo_id: params[:id])
