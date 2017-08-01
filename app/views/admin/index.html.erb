@@ -8,8 +8,8 @@
 
     <h4>users:</h4>
 
-    <% @parents.each do |parent| %>
-      <%= link_to parent.name, admin_path(parent) %>
+    <% @parents.group_by(:created_at).order('id desc').each do |parent| %>
+      <%= parent.id %>. <%= link_to parent.name, admin_path(parent) %>
       <br>
     <% end %>
 
