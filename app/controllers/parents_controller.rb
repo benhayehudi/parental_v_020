@@ -7,6 +7,7 @@ class ParentsController < ApplicationController
     @todos = all_todos(@parent)
     find_todo(@todo)
     @tasks = current_user.tasks.where(todo_id: params[:id])
+    @task = @todo.tasks.build
   end
 
   private
