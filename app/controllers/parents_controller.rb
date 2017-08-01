@@ -3,9 +3,11 @@ class ParentsController < ApplicationController
 
   def show
     @parent = current_user
+    @todo = @parent.todos.build
     @todos = all_todos(@parent)
-    @todo = Todo.find_by(parent_id: params[:id])
+    find_todo(@todo)
     @tasks = current_user.tasks.where(todo_id: params[:id])
+    @task = @todo.tasks.build
   end
 
   private
