@@ -29,13 +29,12 @@ class RegistrationsController < ApplicationController
   end
 
   def twitter
-    @parent = Parent.find_or_create_by(uid: auth['uid'])
-    @parent.name = auth['info']['name']
-    @parent.email = auth['info']['email']
-    @parent.image = auth['info']['image']
+    @parent = Parent.find_or_create_by(uid: auth_hash['uid'])
+    @parent.name = auth_hash['info']['name']
+    @parent.email = auth_hash['info']['email']
+    @parent.image = auth_hash['info']['image']
     @parent.password = SecureRandom.hex
     @parent.save
-    raise @parent.inspect
     session[:parent_id] = @parent.id
     redirect_to parent_path(@parent)
   end
