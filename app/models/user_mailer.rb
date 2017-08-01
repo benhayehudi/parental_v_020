@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default :from => "noreply@parental.bengreenberg.org"
+  default :from => "noreply@mail.parental.life"
 
   def reminder_email
     @todos = Todo.all
