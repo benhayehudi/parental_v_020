@@ -51,9 +51,9 @@
 
                   <p>
                     <% if current_user %>
-                      <%= link_to 'Logout', '/logout' %></p>
+                      <%= link_to 'logout', '/logout' %> | <%= link_to 'privacy policy', '/terms' %></p>
                     <% else %>
-                      <%= link_to 'Login', '/login' %> | <%= link_to 'Signup', '/registrations/new' %> | <%= link_to 'Contact', '/contact' %></p>
+                      <%= link_to 'login', '/login' %> | <%= link_to 'signup', '/registrations/new' %> | <%= link_to 'contact', '/contact' %> | <%= link_to 'privacy policy', '/terms' %></p>
                     <% end %>
                   <p>&copy;2017 <a href="http://www.bengreenberg.org">Ben Greenberg</a>&nbsp;
                     <%= link_to admin_index_path do %>
