@@ -35,7 +35,7 @@ class RegistrationsController < ApplicationController
     @parent.image = auth['info']['image']
     @parent.password = SecureRandom.hex
     @parent.save
-
+    raise @parent.inspect
     session[:parent_id] = @parent.id
     redirect_to parent_path(@parent)
   end
