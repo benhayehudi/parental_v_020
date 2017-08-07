@@ -35,6 +35,16 @@
 
       <br>
 
+    <% if @latetodos %>
+      <h4>todos <em><strong>past due</em></strong></h4>
+        <% @latetodos.each do |late| %>
+          <strong><%= link_to late.title, parent_todo_path(current_user, late) %></strong>
+          <br>
+        <% end %>
+    <% end %>
+
+      <br>
+
       <p><%= link_to 'logout', logout_path %></p>
   </div>
 

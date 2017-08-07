@@ -8,7 +8,6 @@ class TasksController < ApplicationController
 
   def new
     @task = @todo.tasks.build
-    render 'todos/index'
   end
 
   def create
@@ -17,6 +16,7 @@ class TasksController < ApplicationController
     @task.todo_id = @todo.id
     @task.parent_id = @todo.parent_id
     @task.save
+    raise @task.inspect
     redirect_to request.referrer
   end
 
