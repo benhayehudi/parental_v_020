@@ -7,6 +7,7 @@ class ParentsController < ApplicationController
     @todos = all_todos(@parent)
     @tasks = current_user.tasks.where(todo_id: params[:id])
     @latetodos = @todos.late_todos
+    render json: @parent
   end
 
   private
