@@ -16,8 +16,10 @@
       <br>
       <%= f.text_field :address, :placeholder => 'enter a street address', size: 22 %>
       <br>
-      <%= f.fields_for :tasks do |t| %>
-        <%= t.hidden_field :parent_id, :value => current_user.id %>
+      <%= f.fields_for :tasks, @todo.tasks.new do |t| %>
+        <%= t.text_field :title, :placeholder => 'add a todo', size: 22 %>
+        <%= t.hidden_field :parent_id, :value => @parent.id %>
+        <%= t.hidden_field :todo_id, :value => @todo.id %>
       <% end %>
       <br>
       <%= f.submit "add todo", :class => 'btn btn-primary' %>

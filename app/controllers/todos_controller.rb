@@ -8,13 +8,13 @@ class TodosController < ApplicationController
   end
 
   def new
-    @todo = @parent.todos.build
-    render 'todos/index'
+    @todo = Todo.new
+    @task = @todo.tasks.build
   end
 
   def create
     @parent = current_user
-    @todo = @parent.todos.build(todo_params)
+    @todo = Todo.new(todo_params)
     @todo.parent_id = @parent.id
     @todo.save
     redirect_to request.referrer
@@ -43,7 +43,7 @@ class TodosController < ApplicationController
   private
 
   def todo_params
-    params.require(:todo).permit(:title, :address, :done, :description, :parent_id, :duedate)
+    params.require(:todo).permit(:title, :address, :done, :description, :parent_id, :duedate, tasks_attributes: [:title, :parent_id, :todo_id, :id])
   end
 
   def find_todo(todo)

@@ -59,14 +59,13 @@
     <br><br>
 
     <h4>what do you need to do?</h4>
-      <%= form_for([current_user, @todo]) do |f| %>
-        <%= f.fields_for :tasks do |t| %>
-          <%= t.text_field :title, :placeholder => 'what needs to get done?', size: 22 %>
-          <%= t.hidden_field :parent_id, :value => current_user.id %>
-          <%= t.hidden_field :todo_id, :value => @todo.id %>
-          <%= t.submit 'add task', :class => 'btn btn-primary btn-sm' %>
-        <% end %>
+      <%= form_for([current_user, @todo, @task]) do |f| %>
+        <%= f.text_field :title, :placeholder => 'what needs to get done?', size: 22 %>
+        <%= f.hidden_field :parent_id, :value => current_user.id %>
+        <%= f.hidden_field :todo_id, :value => @todo.id %>
+        <%= f.submit 'add task', :class => 'btn btn-primary btn-sm' %>
       <% end %>
+
 
       <br>
 

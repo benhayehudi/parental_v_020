@@ -1,11 +1,6 @@
 class TasksController < ApplicationController
   before_action :logged_in?
 
-  def index
-    @todo = Todo.find_by(parent_id: params[:parent_id])
-    @task = @todo.tasks.build
-  end
-
   def new
     @task = @todo.tasks.build
   end
@@ -16,7 +11,6 @@ class TasksController < ApplicationController
     @task.todo_id = @todo.id
     @task.parent_id = @todo.parent_id
     @task.save
-    raise @task.inspect
     redirect_to request.referrer
   end
 
