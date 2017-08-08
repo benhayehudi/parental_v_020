@@ -35,7 +35,7 @@
     <div id="todo-list">
     <% @todos.each do |todo| %>
       <% if todo.done == false %>
-        <strong><%= link_to todo.title, parent_todo_path(current_user, todo) %></strong>
+        <strong><span id="todoid-<%= todo.id %>"><%= link_to todo.title, parent_todo_path(current_user, todo) %></strong></span>
       <br>
       <% end %>
     <% end%>
