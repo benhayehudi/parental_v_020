@@ -6,8 +6,7 @@ class ParentsController < ApplicationController
     @todo = @parent.todos.build
     @todos = all_todos(@parent)
     @tasks = current_user.tasks.where(todo_id: params[:id])
-    @latetodos = @todos.late_todos
-    render json: @parent
+    latetodos = @todos.late_todos
   end
 
   private
@@ -17,6 +16,6 @@ class ParentsController < ApplicationController
   end
 
   def all_todos(parent)
-    Todo.left_outer_joins(:parent).where('parent_id = ?', @parent.id)
+    Todo.left_outer_joins(:parent).where('parent_id = ? AND done = ?', @parent.id, false)
   end
 end

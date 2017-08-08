@@ -16,8 +16,12 @@ class TodosController < ApplicationController
     @parent = current_user
     @todo = Todo.new(todo_params)
     @todo.parent_id = @parent.id
-    @todo.save
-    redirect_to request.referrer
+    if @todo.save
+      respond_to do |f|
+        f.json {render :json => @todo}
+        f.html { redirect_to request.referrer }
+      end
+    end
   end
 
   def show

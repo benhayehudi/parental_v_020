@@ -6,44 +6,52 @@
 
   <div class="panel-body">
 
-    <img src="<%= current_user.image %>">&nbsp;<em>hi, <%= current_user.name.split(' ').first.downcase %>. what would you like to do?</em>
+    <div id="welcome-msg">
+      <img src="<%= current_user.image %>">&nbsp;<em>hi, <%= current_user.name.split(' ').first.downcase %>. what would you like to do?</em>
+    </div>
 
     <br><br>
 
     <h4>add something to do</h4>
-    <%= form_for([@parent, @todo]) do |f| %>
-      <%= f.text_field :title, :placeholder => 'what needs to get done?', size: 22 %>
-      <br>
-      <%= f.text_field :address, :placeholder => 'enter a street address', size: 22 %>
-      <br>
-      <%= f.fields_for :tasks, @todo.tasks.new do |t| %>
-        <%= t.text_field :title, :placeholder => 'add a todo', size: 22 %>
-        <%= t.hidden_field :parent_id, :value => @parent.id %>
-        <%= t.hidden_field :todo_id, :value => @todo.id %>
+    <div id="main-todo-form">
+      <%= form_for([@parent, @todo]) do |f| %>
+       <%= f.text_field :title, :placeholder => 'what needs to get done?', size: 22 %>
+        <br>
+        <%= f.text_field :address, :placeholder => 'enter a street address', size: 22 %>
+        <br>
+        <%= f.fields_for :tasks, @todo.tasks.new do |t| %>
+          <%= t.text_field :title, :placeholder => 'add a todo', size: 22 %>
+          <%= t.hidden_field :parent_id, :value => @parent.id %>
+          <%= t.hidden_field :todo_id, :value => @todo.id %>
+        <% end %>
+        <br>
+        <%= f.submit "add todo", :id => 'todo-submit', :class => 'btn btn-primary' %>
       <% end %>
-      <br>
-      <%= f.submit "add todo", :class => 'btn btn-primary' %>
-    <% end %>
+    </div>
 
     <br><br>
 
     <h4>your todo list</h4>
-      <% @todos.each do |todo| %>
-        <% if todo.done == false %>
-          <strong><%= link_to todo.title, parent_todo_path(current_user, todo) %></strong>
-          <br>
-        <% end %>
+    <div id="todo-list">
+    <% @todos.each do |todo| %>
+      <% if todo.done == false %>
+        <strong><%= link_to todo.title, parent_todo_path(current_user, todo) %></strong>
+      <br>
       <% end %>
+    <% end%>
+    </div>
 
       <br>
 
-    <% if @latetodos %>
-      <h4>todos <em><strong>past due</em></strong></h4>
-        <% @latetodos.each do |late| %>
-          <strong><%= link_to late.title, parent_todo_path(current_user, late) %></strong>
-          <br>
-        <% end %>
-    <% end %>
+    <div id="main-overdue-todos-list">
+      <% if @latetodos %>
+        <h4>todos <em><strong>past due</em></strong></h4>
+          {{#each @latetodos}}
+            <strong><a href="/parents/<%= @parent.id %>/todos/{{this.id}}">{{this.title}}</a></strong>
+            <br>
+          {{/each}}
+      <% end %>
+    </div>
 
       <br>
 
