@@ -37,9 +37,9 @@ $(function() {
 
 $(document).on('ready', function(e) {
     $('a.load_todo').on("click", function(e) {
+        e.preventDefault()
         $.get(this.href).success(function(json) {
-            var newHTML = `<h1>Hello World</h1>`
-            newHTML += `<div class="panel-body">`
+            var newHTML = `<div class="panel-body">`
             newHTML += `<% if json.description.nil? %>`
             newHTML += `<form class="edit_todo" id="edit_todo_${json.id}" action="/parents/${json.parent_id}/todos/${json.id}" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="_method" value="patch" /><input type="hidden" name="authenticity_token" value="N4X45J0U0T8Q6YQJNbPimSJMAzgz5YhyF3DIsbr9U5qQGJAaJCAtv3UC3/8cfJR8Tkx+anAKVx/3ERQKH+Ss8Q==" /><label for="todo_description">add some info</label><br><textarea name="todo[description]" id="todo_description"></textarea><br><input type="submit" name="commit" value="add description" class="btn btn-primary" data-disable-with="add description" /></form>`
             newHTML += `<% else %>`
@@ -57,8 +57,7 @@ $(document).on('ready', function(e) {
             newHTML += `<br>`
             newHTML += `<a href="/logout">logout</a></div>`
 
-            e.preventDefault()
-                // Get the response
+            // Get the response
 
             console.log(json)
             $('div.todo-content').html("")
