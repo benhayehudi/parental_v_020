@@ -3,7 +3,6 @@ class ParentsController < ApplicationController
 
   def index
     @todo = Todo.find_by(params[:id])
-    render :json => @todo
   end
   
   def show

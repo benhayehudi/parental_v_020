@@ -28,10 +28,7 @@ class TodosController < ApplicationController
     find_todo(@todo)
     @tasks = current_user.tasks.where(todo_id: params[:id])
     @task = @todo.tasks.build
-    respond_to do |f|
-        f.json {render :json => @todo}
-        f.html { redirect_to request.referrer }
-      end
+    
   end
 
   def update
