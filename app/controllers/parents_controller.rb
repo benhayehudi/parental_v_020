@@ -1,6 +1,11 @@
 class ParentsController < ApplicationController
   before_action :logged_in?
 
+  def index
+    @todo = Todo.find_by(params[:id])
+    render :json => @todo
+  end
+  
   def show
     @parent = current_user
     @todo = @parent.todos.build

@@ -12,6 +12,8 @@
 
     <br><br>
 
+    <div class="todo-content">
+
     <h4>add something to do</h4>
     <div id="main-todo-form">
       <%= form_for([@parent, @todo]) do |f| %>
@@ -35,7 +37,7 @@
     <div id="todo-list">
     <% @todos.each do |todo| %>
       <% if todo.done == false %>
-        <strong><span id="todoid-<%= todo.id %>"><%= link_to todo.title, parent_todo_path(current_user, todo) %></strong></span>
+        <strong><%= link_to todo.title, parent_todo_path(current_user, todo), :class => "load_todo", :created_at => todo.created_at %></strong>
       <br>
       <% end %>
     <% end%>
@@ -55,7 +57,7 @@
 
       <br>
 
-      <p><%= link_to 'logout', logout_path %></p>
+    </div>
   </div>
 
 </div>
