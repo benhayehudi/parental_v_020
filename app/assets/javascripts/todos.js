@@ -112,7 +112,7 @@ $(document).on('ready', function(e) {
 
             console.log(json)
             $('div.todo-content').html("")
-            return $("div.todo-content").append(newHTML)
+            $("div.todo-content").append(newHTML)
                 // load the data into dom
         });
     })
