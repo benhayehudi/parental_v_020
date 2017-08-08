@@ -39,56 +39,23 @@ $(document).on('ready', function(e) {
     $('a.load_todo').on("click", function(e) {
         $.get(this.href).success(function(json) {
             var newHTML = `<h1>Hello World</h1>`
-                //var newHTML = `<div class="panel-body">`
-                // var newHTML += ``
-
-
-
-            // if (json.description == null) {
-            //     `<form class="edit_todo" id="edit_todo_` + json.id + `" action="/parents/` + json.parent_json + `/todos/` + json.id `" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="_method" value="patch" /><input type="hidden" name="authenticity_token" value="N4X45J0U0T8Q6YQJNbPimSJMAzgz5YhyF3DIsbr9U5qQGJAaJCAtv3UC3/8cfJR8Tkx+anAKVx/3ERQKH+Ss8Q==" />
-            // <label for="todo_description">add some info</label>
-            // <br>
-            // <textarea name="todo[description]" id="todo_description">
-            // </textarea>
-            // <br>
-            // <input type="submit" name="commit" value="add description" class="btn btn-primary" data-disable-with="add description" />
-            // </form>`
-            // } else {
-            //     `<h4>some info:</h4>` +
-            //     json.description + `<br><br>`
-            // }
-
-            // `<form class = "edit_todo" id = "edit_todo_` + json.id + `" action = "/parents/` + json.parent_id + `/todos/` + json.id + `" accept - charset = "UTF-8" method = "post" > <input name = "utf8" type = "hidden" value = "&#x2713;" / > <input type = "hidden" name = "_method" value = "patch" / > <input type = "hidden" name = "authenticity_token"
-            // value = "gpvPjQjiLvhTd7oKWCLIA6t829WHsYIUharXhxoiyd8lBqdzsdbSeDac4fxx7b7mx3ymh8ReXXllyws8vzs2tA==" / >
-            // <label for = "todo_duedate" > needs to get done by ? </label> <br>
-            // <input type = "date" name = "todo[duedate]" id = "todo_duedate" / >
-            // <br>
-            // <input type = "submit" name = "commit" value = "add due date" class = "btn btn-primary" data-disable-with = "add due date" / >
-            // </form> <br><br>`
-
-            // `<h4>what do you need to do?</h4>
-            // <form class="new_task" id="new_task" action="/parents/` + json.parent_id + `/todos/` + json.id + `/tasks" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="+AwiRMu2C6VMi+W2JtKgeQkeWLR1LQMFwG+HmYWHRDBU6YAIbMVljeuRYcJC7bpaKrTE/1490FnpzhJ8iRZlCQ==" />
-            // <input placeholder="what needs to get done?" size="22" type="text" name="task[title]" id="task_title" />
-            // <input value="` + json.parent_id + `" type="hidden" name="task[parent_id]" id="task_parent_id" />
-            // <input value="` + json.id + `" type="hidden" name="task[todo_id]" id="task_todo_id" />
-            // <input type="submit" name="commit" value="add task" class="btn btn-primary btn-sm" data-disable-with="add task" />
-            // </form><br>`
-
-            // `<h4>are you done?</h4>
-            // <form class="edit_todo" id="edit_todo_` + json.id + `" action="/parents/` + json.parent_id + `/todos/` + json.id `" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="_method" value="patch" /><input type="hidden" name="authenticity_token" value="pYtZNgF28DIfp2DSvpHV6bmLFazfZ3EQkLO5P5I+okYCFjHIuEIMsnpMOySXXqMM1Yto/pyIrn1w0mWENyddLQ==" />
-            // <label for="todo_yes">Yes?</label>
-            // <input type="radio" value="true" name="todo[done]" id="todo_done_true" />
-            // <label for="todo_no">No?</label>
-            // <input type="radio" value="false" checked="checked" name="todo[done]" id="todo_done_false" />
-            // <br>
-            // <input type="submit" name="commit" value="mark done" class="btn btn-primary" data-disable-with="mark done" />
-            // </form>
-            // </div>
-
-            // <div class = "panel-body" >
-            // <a href="/parents/` + json.parent_id + `">return to your todos</a>
-            // <br>
-            // <a href="/logout">logout</a></div>`
+            newHTML += `<div class="panel-body">`
+            newHTML += `<% if json.description.nil? %>`
+            newHTML += `<form class="edit_todo" id="edit_todo_${json.id}" action="/parents/${json.parent_id}/todos/${json.id}" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="_method" value="patch" /><input type="hidden" name="authenticity_token" value="N4X45J0U0T8Q6YQJNbPimSJMAzgz5YhyF3DIsbr9U5qQGJAaJCAtv3UC3/8cfJR8Tkx+anAKVx/3ERQKH+Ss8Q==" /><label for="todo_description">add some info</label><br><textarea name="todo[description]" id="todo_description"></textarea><br><input type="submit" name="commit" value="add description" class="btn btn-primary" data-disable-with="add description" /></form>`
+            newHTML += `<% else %>`
+            newHTML += `<h4>some info:</h4>`
+            newHTML += json.description
+            newHTML += `<br><br>`
+            newHTML += `<form class = "edit_todo" id = "edit_todo_${json.id}" action = "/parents/${json.parent_id}/todos/${json.id}" accept-charset = "UTF-8" method = "post" > <input name = "utf8" type = "hidden" value = "&#x2713;" / > <input type = "hidden" name = "_method" value = "patch" / > <input type = "hidden" name = "authenticity_token" value = "gpvPjQjiLvhTd7oKWCLIA6t829WHsYIUharXhxoiyd8lBqdzsdbSeDac4fxx7b7mx3ymh8ReXXllyws8vzs2tA==" / ><label for = "todo_duedate" >needs to get done by ?</label><br><input type = "date" name = "todo[duedate]" id = "todo_duedate" /><br><input type = "submit" name = "commit" value = "add due date" class = "btn btn-primary" data-disable-with = "add due date" / ></form> <br><br>`
+            newHTML += `<h4>what do you need to do?</h4>`
+            newHTML += `<form class="new_task" id="new_task" action="/parents/${json.parent_id}/todos/${json.id}/tasks" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="+AwiRMu2C6VMi+W2JtKgeQkeWLR1LQMFwG+HmYWHRDBU6YAIbMVljeuRYcJC7bpaKrTE/1490FnpzhJ8iRZlCQ==" /><input placeholder="what needs to get done?" size="22" type="text" name="task[title]" id="task_title" /><input value="${json.parent_id}" type="hidden" name="task[parent_id]" id="task_parent_id" /><input value="${json.id}" type="hidden" name="task[todo_id]" id="task_todo_id" /><input type="submit" name="commit" value="add task" class="btn btn-primary btn-sm" data-disable-with="add task" /></form><br>`
+            newHTML += `<h4>are you done?</h4>`
+            newHTML += `<form class="edit_todo" id="edit_todo_${json.id}" action="/parents/${json.parent_id}/todos/${json.id}" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="_method" value="patch" /><input type="hidden" name="authenticity_token" value="pYtZNgF28DIfp2DSvpHV6bmLFazfZ3EQkLO5P5I+okYCFjHIuEIMsnpMOySXXqMM1Yto/pyIrn1w0mWENyddLQ==" /><label for="todo_yes">Yes?</label><input type="radio" value="true" name="todo[done]" id="todo_done_true" /><label for="todo_no">No?</label><input type="radio" value="false" checked="checked" name="todo[done]" id="todo_done_false" /><br><input type="submit" name="commit" value="mark done" class="btn btn-primary" data-disable-with="mark done" /></form>`
+            newHTML += `</div>`
+            newHTML += `<div class = "panel-body" >`
+            newHTML += `<a href="/parents/${json.parent_id}">return to your todos</a>`
+            newHTML += `<br>`
+            newHTML += `<a href="/logout">logout</a></div>`
 
             e.preventDefault()
                 // Get the response
