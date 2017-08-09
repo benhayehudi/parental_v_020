@@ -1,11 +1,69 @@
 <div class="panel panel-default">
 
-  <div class="panel-heading">
-  </div>
+<div class="panel-heading">
+</div>
 
-<div class="todo-content">
-    
-  </div>
+<div class="todo-address">
+<%= form_for([current_user, @todo]) do |f| %>
+  <%= f.label :address, "add an address:" %><br>
+  <%= f.text_field :address, :placeholder => 'enter a street address', size: 22 %>
+  <br>
+  <%= f.submit 'submit', :class => 'btn btn-primary' %>
+<% end %>
+</div>
+
+<div class="todo-description">
+<%= form_for([current_user, @todo]) do |f| %>
+  <%= f.label :description, "add some info" %>
+  <br>
+  <%= f.text_area :description %>
+  <br>
+  <%= f.submit 'add description', :class => 'btn btn-primary' %>
+<% end %>
+</div>
+
+<div class="todo-duedate">
+<%= form_for([current_user, @todo]) do |f| %>
+  <%= f.label :duedate, "needs to get done by?" %>
+  <br>
+  <%= f.date_field :duedate, :value => @todo.duedate %>
+  <br>
+  <%= f.submit 'add due date', :class => 'btn btn-primary' %>
+<% end %>
+</div>
+
+<div class="todo-addtask">
+<%= form_for([current_user, @todo, @task]) do |f| %>
+  <%= f.text_field :title, :placeholder => 'what needs to get done?', size: 22 %>
+  <%= f.hidden_field :parent_id, :value => current_user.id %>
+  <%= f.hidden_field :todo_id, :value => @todo.id %>
+  <%= f.submit 'add task', :class => 'btn btn-primary btn-sm' %>
+<% end %>
+</div>
+
+<div class="todo-taskdone">
+<% @tasks.each do |task| %>
+  <% if task.done == false %>
+    <%= form_for(task, :url => parent_todo_task_path(@todo.id, task.id)) do |f| %>
+      <%= f.label 'y' %><%= f.radio_button :done, "true" %>
+      <%= f.label 'n' %><%= f.radio_button :done, "false" %>
+      <%= f.hidden_field :task_id, :value => task.id %>
+      <%= f.submit 'mark done', :class => 'btn btn-primary btn-xs' %>
+    <% end %>
+  <% end %>
+<% end %>
+</div>
+
+<div class="todo-done">
+<%= form_for([current_user, @todo]) do |f| %>
+  <%= f.label "yes?" %>
+  <%= f.radio_button :done, "true" %>
+  <%= f.label "no?" %>
+  <%= f.radio_button :done, "false" %>
+  <br>
+  <%= f.submit 'mark done', :class => 'btn btn-primary' %>
+<% end %>
+</div>
 
 <div class="panel panel-default">
 

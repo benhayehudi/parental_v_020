@@ -61,4 +61,4 @@ gem 'dotenv-rails'
 gem 'rails_12factor', group: :production
 gem 'sparkpost'
 gem 'active_model_serializers'
-gem 'handlebars'
+gem 'jquery-rails'
