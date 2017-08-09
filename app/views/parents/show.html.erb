@@ -51,7 +51,7 @@
   <%= f.label :address, "add an address:" %><br>
   <%= f.text_field :address, :placeholder => 'enter a street address', size: 22 %>
   <br>
-  <%= f.submit 'submit', :class => 'btn btn-primary' %>
+  <%= f.submit 'submit', :class => 'btn btn-primary', :id => 'submit-address' %>
 <% end %>
 </div>
 
@@ -61,7 +61,7 @@
   <br>
   <%= f.text_area :description %>
   <br>
-  <%= f.submit 'add description', :class => 'btn btn-primary' %>
+  <%= f.submit 'add description', :class => 'btn btn-primary', :id => 'submit-description' %>
 <% end %>
 <br>
 </div>
@@ -73,7 +73,7 @@
   <br>
   <%= f.date_field :duedate, :value => @todo.duedate %>
   <br>
-  <%= f.submit 'add due date', :class => 'btn btn-primary' %>
+  <%= f.submit 'add due date', :class => 'btn btn-primary', :id => 'submit-duedate' %>
 <% end %>
 <br>
 </div>
@@ -84,7 +84,7 @@
     <%= f.text_field :title, :placeholder => 'what needs to get done?', size: 22 %>
     <%= f.hidden_field :parent_id, :value => current_user.id %>
     <%= f.hidden_field :todo_id, :value => @current_todo.id %>
-    <%= f.submit 'add task', :class => 'btn btn-primary btn-sm' %>
+    <%= f.submit 'add task', :class => 'btn btn-primary btn-sm', :id => 'submit-task' %>
   <% end %>
   <br>
 </div>
@@ -101,7 +101,7 @@
   <%= f.label "no?" %>
   <%= f.radio_button :done, "false" %>
   <br>
-  <%= f.submit 'mark done', :class => 'btn btn-primary' %>
+  <%= f.submit 'mark done', :class => 'btn btn-primary', :id => 'submit-tododone' %>
 <% end %>
 <br>
 <%= link_to 'return to your todos', parent_path(@parent), :style => 'color: black'  %>
