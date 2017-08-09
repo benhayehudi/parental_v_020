@@ -60,20 +60,14 @@ $(document).on('ready', function(e) {
             } else {
                 json.tasks.forEach(function(task) {
                     if (task.done == false && task.title !== null) {
-                        taskdoneHTML += `${task.title} ~ <em>done?</em>`
+                        taskdoneHTML += `&#9734;${task.title}<br>`
                     } else {
-                        taskdoneHTML += ''
+                        taskdoneHTML = ''
                     }
                 })
             }
 
             var tododoneHTML = `<h4>are you done?</h4>`
-            tododoneHTML += `</div>`
-            tododoneHTML += `<div class = "panel-body" >`
-            tododoneHTML += `<a href="/parents/${json.parent_id}">return to your todos</a>`
-            tododoneHTML += `<br>`
-            tododoneHTML += `<a href="/logout">logout</a></div>`
-
 
             $('div.todo-content').html("")
 
@@ -96,7 +90,7 @@ $(document).on('ready', function(e) {
             $("div.todo-taskdone").prepend(taskdoneHTML)
 
             $("div.todo-done").css("display", "block");
-            $("div.todo-done").html(tododoneHTML)
+            $("div.todo-done").prepend(tododoneHTML)
         });
     })
 })
