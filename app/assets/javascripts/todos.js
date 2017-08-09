@@ -39,6 +39,7 @@ $(document).on('ready', function(e) {
     $('a.load_todo').on("click", function(e) {
         e.preventDefault()
         $.get(this.href).success(function(json) {
+            var taskdoneHTML = ''
             var headerHTML = `<h3 class="panel-title">${json.title}</h3>`
             var addressHTML = `<div class="panel-body">`
             if (json.address == null || json.address == "") {
@@ -59,9 +60,9 @@ $(document).on('ready', function(e) {
             } else {
                 json.tasks.forEach(function(task) {
                     if (task.done == false && task.title !== null) {
-                        var taskdoneHTML = `${task.title} ~ <em>done?</em>`
+                        taskdoneHTML += `${task.title} ~ <em>done?</em>`
                     } else {
-                        var taskdoneHTML = ''
+                        taskdoneHTML += ''
                     }
                 })
             }
@@ -74,14 +75,28 @@ $(document).on('ready', function(e) {
             tododoneHTML += `<a href="/logout">logout</a></div>`
 
 
+            $('div.todo-content').html("")
+
             $('div.panel-heading').html("")
             $('div.panel-heading').html(headerHTML)
+
+            $("div.todo-address").css("display", "block");
             $("div.todo-address").prepend(addressHTML)
+
+            $("div.todo-description").css("display", "block");
             $("div.todo-description").prepend(descriptionHTML)
+
+            $("div.todo-duedate").css("display", "block");
             $("div.todo-duedate").prepend(duedateHTML)
+
+            $("div.todo-addtask").css("display", "block");
             $("div.todo-addtask").prepend(addtaskHTML)
+
+            $("div.todo-taskdone").css("display", "block");
             $("div.todo-taskdone").prepend(taskdoneHTML)
-            $("div.todo-todoone").prepend(tododoneHTML)
+
+            $("div.todo-done").css("display", "block");
+            $("div.todo-done").html(tododoneHTML)
         });
     })
 })

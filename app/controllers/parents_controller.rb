@@ -7,9 +7,11 @@ class ParentsController < ApplicationController
   
   def show
     @parent = current_user
+    @current_todo = Todo.find_by(parent_id: params[:id])
     @todo = @parent.todos.build
     @todos = all_todos(@parent)
     @tasks = current_user.tasks.where(todo_id: params[:id])
+    @task = @todo.tasks.build
     latetodos = @todos.late_todos
   end
 
