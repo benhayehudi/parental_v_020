@@ -9,9 +9,10 @@ Rails.application.routes.draw do
   post '/login' => 'sessions#create'
   get '/auth/facebook/callback' => 'registrations#facebook'
   get '/auth/twitter/callback', to: 'registrations#twitter'
-
+ 
+  get '/parents/:id/todos/:id' => 'parents#show'
   resources :parents, only: [:show, :update] do
-    resources :todos, only: [:index, :new, :show, :create,:destroy, :update] do
+    resources :todos, only: [:index, :new, :create,:destroy, :update] do
       resources :tasks, only: [:new, :create, :destroy, :update]
     end
   end

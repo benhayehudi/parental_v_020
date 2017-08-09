@@ -6,8 +6,9 @@ class ParentsController < ApplicationController
   end
   
   def show
+    todo_id = request.path.split("/")[4]
     @parent = current_user
-    @current_todo = Todo.find_by(parent_id: params[:id])
+    @current_todo = Todo.find_by(id: todo_id)
     @todo = @parent.todos.build
     @todos = all_todos(@parent)
     @tasks = current_user.tasks.where(todo_id: params[:id])

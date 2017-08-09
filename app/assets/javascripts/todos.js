@@ -1,12 +1,14 @@
-function Todo(attributes) {
-    this.title = attributes.title;
-    this.description = attributes.description;
-    this.id = attributes.id;
-    this.address = attributes.address;
-    this.done = attributes.done;
-    this.duedate = attributes.duedate;
-    this.parent_id = attributes.parent_id;
-    this.tasks = attributes.tasks;
+class Todo {
+    constructor(id, parent_id, title, description, address, done, duedate, tasks) {
+        this.title = title
+        this.description = description
+        this.id = id
+        this.address = address
+        this.done = done
+        this.duedate = duedate
+        this.parent_id = parent_id
+        this.tasks = tasks
+    }
 }
 
 Todo.error = function(response) {
@@ -85,7 +87,6 @@ Todo.prototype.submitForm = function() {
                 .success(response => $("div.todo-taskdone").prepend(taskdoneHTML))
                 .success(response => $("div.todo-done").css("display", "block"))
                 .success(response => $("div.todo-done").prepend(tododoneHTML))
-            debugger
         })
 
         $("#submit-duedate").on("submit", function(e) {
@@ -157,7 +158,10 @@ $(function() {
 $(document).on('ready', function(e) {
     $('a.load_todo').on("click", function(e) {
         e.preventDefault()
-        $.get(this.href).success(function(json) {
+        $.get({
+            url: this.href,
+            data: { id: this.href.split("/")[6] }
+        }).success(function(json) {
             var taskdoneHTML = ''
             var addtaskHTML = ''
             var headerHTML = `<h3 class="panel-title">${json.title}</h3>`
@@ -212,7 +216,16 @@ $(document).on('ready', function(e) {
             $("div.todo-done").css("display", "block");
             $("div.todo-done").prepend(tododoneHTML)
 
-            t = new Todo(json)
+            t = new Todo({
+                id: json.id,
+                parent_id: json.parent_id,
+                description: json.description,
+                done: json.done,
+                duedate: json.duedate,
+                title: json.title,
+                tasks: json.tasks,
+                address: json.address
+            })
             t.submitForm();
         });
     })
