@@ -37,7 +37,7 @@
     <div id="todo-list">
     <% @todos.each do |todo| %>
       <% if todo.done == false %>
-        <strong><%= link_to todo.title, parent_todo_path(current_user, todo), :class => "load_todo", :created_at => todo.created_at %></strong>
+        <strong><%= link_to todo.title, parent_todo_path(current_user, todo), :class => "load_todo", data: { created_at: todo.created_at.to_param } %></strong>
       <br>
       <% end %>
     <% end%>

@@ -39,12 +39,21 @@ $(document).on('ready', function(e) {
     $('a.load_todo').on("click", function(e) {
         e.preventDefault()
         $.get(this.href).success(function(json) {
+            debugger
+            var headerHTML = `<h3 class="panel-title">${json.title} ~ added: ${json.created_at}</h3>`
             var newHTML = `<div class="panel-body">`
-            newHTML += `<% if json.description.nil? %>`
-            newHTML += `<form class="edit_todo" id="edit_todo_${json.id}" action="/parents/${json.parent_id}/todos/${json.id}" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="_method" value="patch" /><input type="hidden" name="authenticity_token" value="N4X45J0U0T8Q6YQJNbPimSJMAzgz5YhyF3DIsbr9U5qQGJAaJCAtv3UC3/8cfJR8Tkx+anAKVx/3ERQKH+Ss8Q==" /><label for="todo_description">add some info</label><br><textarea name="todo[description]" id="todo_description"></textarea><br><input type="submit" name="commit" value="add description" class="btn btn-primary" data-disable-with="add description" /></form>`
-            newHTML += `<% else %>`
-            newHTML += `<h4>some info:</h4>`
-            newHTML += json.description
+            if (json.address == null || json.address == "") {
+                newHTML += `no address supplied<br>`
+                newHTML += `<form class="edit_todo" id="edit_todo+${json.id}" action="/parents/${json.parent_id}/todos/${json.id}" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="_method" value="patch" /><input type="hidden" name="authenticity_token" value="N4X45J0U0T8Q6YQJNbPimSJMAzgz5YhyF3DIsbr9U5qQGJAaJCAtv3UC3/8cfJR8Tkx+anAKVx/3ERQKH+Ss8Q==" /><label for="todo_address">add an address</label><br><input type="text" name="todo[address] size="22" id="todo_address" /><br><input type="submit" name="commit" value="add address" class="btn btn-primary" data-disable-with="add due date" /></form><br><br>`
+            } else {
+                newHTML += `<iframe width="200" height="150" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCkIkw32ps5odw1KNV7wtdteXOyk1B69RE &q=${json.address}" allowfullscreen> </iframe>`
+            }
+            if (json.description == null) {
+                newHTML += `<form class="edit_todo" id="edit_todo_${json.id}" action="/parents/${json.parent_id}/todos/${json.id}" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="_method" value="patch" /><input type="hidden" name="authenticity_token" value="N4X45J0U0T8Q6YQJNbPimSJMAzgz5YhyF3DIsbr9U5qQGJAaJCAtv3UC3/8cfJR8Tkx+anAKVx/3ERQKH+Ss8Q==" /><label for="todo_description">add some info</label><br><textarea name="todo[description]" id="todo_description"></textarea><br><input type="submit" name="commit" value="add description" class="btn btn-primary" data-disable-with="add description" /></form>`
+            } else {
+                newHTML += `<h4>some info:</h4>`
+                newHTML += json.description
+            }
             newHTML += `<br><br>`
             newHTML += `<form class = "edit_todo" id = "edit_todo_${json.id}" action = "/parents/${json.parent_id}/todos/${json.id}" accept-charset = "UTF-8" method = "post" > <input name = "utf8" type = "hidden" value = "&#x2713;" / > <input type = "hidden" name = "_method" value = "patch" / > <input type = "hidden" name = "authenticity_token" value = "gpvPjQjiLvhTd7oKWCLIA6t829WHsYIUharXhxoiyd8lBqdzsdbSeDac4fxx7b7mx3ymh8ReXXllyws8vzs2tA==" / ><label for = "todo_duedate" >needs to get done by ?</label><br><input type = "date" name = "todo[duedate]" id = "todo_duedate" /><br><input type = "submit" name = "commit" value = "add due date" class = "btn btn-primary" data-disable-with = "add due date" / ></form> <br><br>`
             newHTML += `<h4>what do you need to do?</h4>`
@@ -57,12 +66,11 @@ $(document).on('ready', function(e) {
             newHTML += `<br>`
             newHTML += `<a href="/logout">logout</a></div>`
 
-            // Get the response
 
-            console.log(json)
+            $('div.panel-heading').html("")
+            $('div.panel-heading').html(headerHTML)
             $('div.todo-content').html("")
             $("div.todo-content").html(newHTML)
-                // load the data into dom
         });
     })
 })
