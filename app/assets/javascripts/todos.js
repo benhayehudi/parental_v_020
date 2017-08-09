@@ -6,17 +6,40 @@ function Todo(attributes) {
     this.done = attributes.done;
     this.duedate = attributes.duedate;
     this.parent_id = attributes.parent_id;
-    this.created_at = attributes.created_at;
+    this.tasks = attributes.tasks;
 }
 
 Todo.error = function(response) {
     alert("Please enter a valid todo.", response)
 }
 
-Todo.prototype.renderIndex = function() {
+Todo.prototype.editAddress = function() {
+    $(function() {
+        $("#submit-address").on("submit", function(e) {
+            e.preventDefault()
+            var $form = $(this);
+            var action = $form.attr("action");
+            var params = $form.serialize();
 
-    `<strong><a href="/parents/` + response.parent_id + `/todos/` + response.id + `"` + `class="todo-id-` + response.id + `"> ` +
-        response.title + ` < /a></strong > < br > `
+            $.post(action, params)
+                .success(response => $('div.todo-content').html(""))
+                .success(response => $('div.panel-heading').html(""))
+                .success(response => $('div.panel-heading').html(headerHTML))
+                .success(response => $("div.todo-address").css("display", "block"))
+                .success(response => $("div.todo-address").prepend(addressHTML))
+                .success(response => $("div.todo-description").css("display", "block"))
+                .success(response => $("div.todo-description").prepend(descriptionHTML))
+                .success(response => $("div.todo-duedate").css("display", "block"))
+                .success(response => $("div.todo-duedate").prepend(duedateHTML))
+                .success(response => $("div.todo-addtask").css("display", "block"))
+                .success(response => $("div.todo-addtask").prepend(addtaskHTML))
+                .success(response => $("div.todo-taskdone").css("display", "block"))
+                .success(response => $("div.todo-taskdone").prepend(taskdoneHTML))
+                .success(response => $("div.todo-done").css("display", "block"))
+                .success(response => $("div.todo-done").prepend(tododoneHTML))
+
+        })
+    })
 }
 
 $(function() {
@@ -25,7 +48,6 @@ $(function() {
         var $form = $(this);
         var action = $form.attr("action");
         var params = $form.serialize();
-        var todoIndex = Todo.new
 
         $.post(action, params)
             .success(response => $("#todo-list").prepend(
@@ -40,6 +62,7 @@ $(document).on('ready', function(e) {
         e.preventDefault()
         $.get(this.href).success(function(json) {
             var taskdoneHTML = ''
+            var addtaskHTML = ''
             var headerHTML = `<h3 class="panel-title">${json.title}</h3>`
             var addressHTML = `<div class="panel-body">`
             if (json.address == null || json.address == "") {
@@ -55,12 +78,12 @@ $(document).on('ready', function(e) {
             }
             descriptionHTML += `<br><br>`
             var duedateHTML = `<h4>what do you need to do?</h4>`
-            if (json.tasks == null || json.tasks == "") {
-                var addtaskHTML = `no tasks for this todo yet`
+            if (!json.tasks) {
+                addtaskHTML += `no tasks for this todo yet`
             } else {
                 json.tasks.forEach(function(task) {
-                    if (task.done == false && task.title !== null) {
-                        taskdoneHTML += `&#9734;${task.title}<br>`
+                    if (task.done == false) {
+                        taskdoneHTML += `${task.title}<br>`
                     } else {
                         taskdoneHTML = ''
                     }
@@ -91,6 +114,7 @@ $(document).on('ready', function(e) {
 
             $("div.todo-done").css("display", "block");
             $("div.todo-done").prepend(tododoneHTML)
+            debugger
         });
     })
 })
