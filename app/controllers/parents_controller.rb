@@ -11,7 +11,7 @@ class ParentsController < ApplicationController
       todo_id = request.env['HTTP_X_REQUESTED_WITH'].split("/")[3]
       @current_todo = Todo.find_by(id: todo_id)
     else
-      todo_id = "1"
+      todo_id = current_user.todos.last
       @current_todo = Todo.find_or_create_by(id: todo_id)
     end
     @parent = current_user
