@@ -1,3 +1,11 @@
+var headerHTML;
+var addressHTML;
+var descriptionHTML;
+var duedateHTML;
+var addtaskHTML;
+var taskdoneHTML;
+var tododoneHTML;
+
 class Todo {
     constructor(id, parent_id, title, description, address, done, duedate, tasks) {
         this.title = title
@@ -11,132 +19,131 @@ class Todo {
     }
 }
 
+
 Todo.error = function(response) {
     alert("Please enter a valid todo.", response)
 }
 
 Todo.prototype.submitForm = function() {
-    $(function() {
-        $("#submit-address").on("submit", function(e) {
-            e.preventDefault()
-            var $form = $(this);
-            var action = $form.attr("action");
-            var params = $form.serialize();
+    $("#address-form").on("submit", function(e) {
+        e.preventDefault()
+        var $form = $(this);
+        var action = $form.attr("action");
+        var params = $form.serialize();
 
-            $.post(action, params)
-                .success(response => $('div.todo-content').html(""))
-                .success(response => $('div.panel-heading').html(""))
-                .success(response => $('div.panel-heading').html(headerHTML))
-                .success(response => $("div.todo-address").css("display", "block"))
-                .success(response => $("div.todo-address").prepend(addressHTML))
-                .success(response => $("div.todo-description").css("display", "block"))
-                .success(response => $("div.todo-description").prepend(descriptionHTML))
-                .success(response => $("div.todo-duedate").css("display", "block"))
-                .success(response => $("div.todo-duedate").prepend(duedateHTML))
-                .success(response => $("div.todo-addtask").css("display", "block"))
-                .success(response => $("div.todo-addtask").prepend(addtaskHTML))
-                .success(response => $("div.todo-taskdone").css("display", "block"))
-                .success(response => $("div.todo-taskdone").prepend(taskdoneHTML))
-                .success(response => $("div.todo-done").css("display", "block"))
-                .success(response => $("div.todo-done").prepend(tododoneHTML))
+        $.post(action, params)
+            .success(response => $('div.todo-content').html(""))
+            .success(response => $('div.panel-heading').html(""))
+            .success(response => $('div.panel-heading').html(headerHTML))
+            .success(response => $("div.todo-address").css("display", "block"))
+            .success(response => $("div.todo-address").prepend(addressHTML))
+            .success(response => $("div.todo-description").css("display", "block"))
+            .success(response => $("div.todo-description").prepend(descriptionHTML))
+            .success(response => $("div.todo-duedate").css("display", "block"))
+            .success(response => $("div.todo-duedate").prepend(duedateHTML))
+            .success(response => $("div.todo-addtask").css("display", "block"))
+            .success(response => $("div.todo-addtask").prepend(addtaskHTML))
+            .success(response => $("div.todo-taskdone").css("display", "block"))
+            .success(response => $("div.todo-taskdone").prepend(taskdoneHTML))
+            .success(response => $("div.todo-done").css("display", "block"))
+            .success(response => $("div.todo-done").prepend(tododoneHTML))
+            .success(response => $("input[type=submit]").removeAttr("disabled"))
+    })
+    $("#submit-description").on("submit", function(e) {
+        e.preventDefault()
+        var $form = $(this);
+        var action = $form.attr("action");
+        var params = $form.serialize();
 
-        })
-        $("#submit-description").on("submit", function(e) {
-            e.preventDefault()
-            var $form = $(this);
-            var action = $form.attr("action");
-            var params = $form.serialize();
+        $.post(action, params)
+            .success(response => $('div.todo-content').html(""))
+            .success(response => $('div.panel-heading').html(""))
+            .success(response => $('div.panel-heading').html(headerHTML))
+            .success(response => $("div.todo-address").css("display", "block"))
+            .success(response => $("div.todo-address").prepend(addressHTML))
+            .success(response => $("div.todo-description").css("display", "block"))
+            .success(response => $("div.todo-description").prepend(descriptionHTML))
+            .success(response => $("div.todo-duedate").css("display", "block"))
+            .success(response => $("div.todo-duedate").prepend(duedateHTML))
+            .success(response => $("div.todo-addtask").css("display", "block"))
+            .success(response => $("div.todo-addtask").prepend(addtaskHTML))
+            .success(response => $("div.todo-taskdone").css("display", "block"))
+            .success(response => $("div.todo-taskdone").prepend(taskdoneHTML))
+            .success(response => $("div.todo-done").css("display", "block"))
+            .success(response => $("div.todo-done").prepend(tododoneHTML))
 
-            $.post(action, params)
-                .success(response => $('div.todo-content').html(""))
-                .success(response => $('div.panel-heading').html(""))
-                .success(response => $('div.panel-heading').html(headerHTML))
-                .success(response => $("div.todo-address").css("display", "block"))
-                .success(response => $("div.todo-address").prepend(addressHTML))
-                .success(response => $("div.todo-description").css("display", "block"))
-                .success(response => $("div.todo-description").prepend(descriptionHTML))
-                .success(response => $("div.todo-duedate").css("display", "block"))
-                .success(response => $("div.todo-duedate").prepend(duedateHTML))
-                .success(response => $("div.todo-addtask").css("display", "block"))
-                .success(response => $("div.todo-addtask").prepend(addtaskHTML))
-                .success(response => $("div.todo-taskdone").css("display", "block"))
-                .success(response => $("div.todo-taskdone").prepend(taskdoneHTML))
-                .success(response => $("div.todo-done").css("display", "block"))
-                .success(response => $("div.todo-done").prepend(tododoneHTML))
+    })
+    $("#submit-task").on("submit", function(e) {
+        e.preventDefault()
+        var $form = $(this);
+        var action = $form.attr("action");
+        var params = $form.serialize();
 
-        })
-        $("#submit-task").on("submit", function(e) {
-            e.preventDefault()
-            var $form = $(this);
-            var action = $form.attr("action");
-            var params = $form.serialize();
+        $.post(action, params)
+            .success(response => $('div.todo-content').html(""))
+            .success(response => $('div.panel-heading').html(""))
+            .success(response => $('div.panel-heading').html(headerHTML))
+            .success(response => $("div.todo-address").css("display", "block"))
+            .success(response => $("div.todo-address").prepend(addressHTML))
+            .success(response => $("div.todo-description").css("display", "block"))
+            .success(response => $("div.todo-description").prepend(descriptionHTML))
+            .success(response => $("div.todo-duedate").css("display", "block"))
+            .success(response => $("div.todo-duedate").prepend(duedateHTML))
+            .success(response => $("div.todo-addtask").css("display", "block"))
+            .success(response => $("div.todo-addtask").prepend(addtaskHTML))
+            .success(response => $("div.todo-taskdone").css("display", "block"))
+            .success(response => $("div.todo-taskdone").prepend(taskdoneHTML))
+            .success(response => $("div.todo-done").css("display", "block"))
+            .success(response => $("div.todo-done").prepend(tododoneHTML))
+    })
 
-            $.post(action, params)
-                .success(response => $('div.todo-content').html(""))
-                .success(response => $('div.panel-heading').html(""))
-                .success(response => $('div.panel-heading').html(headerHTML))
-                .success(response => $("div.todo-address").css("display", "block"))
-                .success(response => $("div.todo-address").prepend(addressHTML))
-                .success(response => $("div.todo-description").css("display", "block"))
-                .success(response => $("div.todo-description").prepend(descriptionHTML))
-                .success(response => $("div.todo-duedate").css("display", "block"))
-                .success(response => $("div.todo-duedate").prepend(duedateHTML))
-                .success(response => $("div.todo-addtask").css("display", "block"))
-                .success(response => $("div.todo-addtask").prepend(addtaskHTML))
-                .success(response => $("div.todo-taskdone").css("display", "block"))
-                .success(response => $("div.todo-taskdone").prepend(taskdoneHTML))
-                .success(response => $("div.todo-done").css("display", "block"))
-                .success(response => $("div.todo-done").prepend(tododoneHTML))
-        })
+    $("#submit-duedate").on("submit", function(e) {
+        e.preventDefault()
+        var $form = $(this);
+        var action = $form.attr("action");
+        var params = $form.serialize();
 
-        $("#submit-duedate").on("submit", function(e) {
-            e.preventDefault()
-            var $form = $(this);
-            var action = $form.attr("action");
-            var params = $form.serialize();
+        $.post(action, params)
+            .success(response => $('div.todo-content').html(""))
+            .success(response => $('div.panel-heading').html(""))
+            .success(response => $('div.panel-heading').html(headerHTML))
+            .success(response => $("div.todo-address").css("display", "block"))
+            .success(response => $("div.todo-address").prepend(addressHTML))
+            .success(response => $("div.todo-description").css("display", "block"))
+            .success(response => $("div.todo-description").prepend(descriptionHTML))
+            .success(response => $("div.todo-duedate").css("display", "block"))
+            .success(response => $("div.todo-duedate").prepend(duedateHTML))
+            .success(response => $("div.todo-addtask").css("display", "block"))
+            .success(response => $("div.todo-addtask").prepend(addtaskHTML))
+            .success(response => $("div.todo-taskdone").css("display", "block"))
+            .success(response => $("div.todo-taskdone").prepend(taskdoneHTML))
+            .success(response => $("div.todo-done").css("display", "block"))
+            .success(response => $("div.todo-done").prepend(tododoneHTML))
 
-            $.post(action, params)
-                .success(response => $('div.todo-content').html(""))
-                .success(response => $('div.panel-heading').html(""))
-                .success(response => $('div.panel-heading').html(headerHTML))
-                .success(response => $("div.todo-address").css("display", "block"))
-                .success(response => $("div.todo-address").prepend(addressHTML))
-                .success(response => $("div.todo-description").css("display", "block"))
-                .success(response => $("div.todo-description").prepend(descriptionHTML))
-                .success(response => $("div.todo-duedate").css("display", "block"))
-                .success(response => $("div.todo-duedate").prepend(duedateHTML))
-                .success(response => $("div.todo-addtask").css("display", "block"))
-                .success(response => $("div.todo-addtask").prepend(addtaskHTML))
-                .success(response => $("div.todo-taskdone").css("display", "block"))
-                .success(response => $("div.todo-taskdone").prepend(taskdoneHTML))
-                .success(response => $("div.todo-done").css("display", "block"))
-                .success(response => $("div.todo-done").prepend(tododoneHTML))
+    })
+    $("#submit-tododone").on("submit", function(e) {
+        e.preventDefault()
+        var $form = $(this);
+        var action = $form.attr("action");
+        var params = $form.serialize();
 
-        })
-        $("#submit-tododone").on("submit", function(e) {
-            e.preventDefault()
-            var $form = $(this);
-            var action = $form.attr("action");
-            var params = $form.serialize();
+        $.post(action, params)
+            .success(response => $('div.todo-content').html(""))
+            .success(response => $('div.panel-heading').html(""))
+            .success(response => $('div.panel-heading').html(headerHTML))
+            .success(response => $("div.todo-address").css("display", "hide"))
+            .success(response => $("div.todo-address").prepend(addressHTML))
+            .success(response => $("div.todo-description").css("display", "hide"))
+            .success(response => $("div.todo-description").prepend(descriptionHTML))
+            .success(response => $("div.todo-duedate").css("display", "hide"))
+            .success(response => $("div.todo-duedate").prepend(duedateHTML))
+            .success(response => $("div.todo-addtask").css("display", "hide"))
+            .success(response => $("div.todo-addtask").prepend(addtaskHTML))
+            .success(response => $("div.todo-taskdone").css("display", "hide"))
+            .success(response => $("div.todo-taskdone").prepend(taskdoneHTML))
+            .success(response => $("div.todo-done").css("display", "hide"))
+            .success(response => $("div.todo-done").prepend(tododoneHTML))
 
-            $.post(action, params)
-                .success(response => $('div.todo-content').html(""))
-                .success(response => $('div.panel-heading').html(""))
-                .success(response => $('div.panel-heading').html(headerHTML))
-                .success(response => $("div.todo-address").css("display", "hide"))
-                .success(response => $("div.todo-address").prepend(addressHTML))
-                .success(response => $("div.todo-description").css("display", "hide"))
-                .success(response => $("div.todo-description").prepend(descriptionHTML))
-                .success(response => $("div.todo-duedate").css("display", "hide"))
-                .success(response => $("div.todo-duedate").prepend(duedateHTML))
-                .success(response => $("div.todo-addtask").css("display", "hide"))
-                .success(response => $("div.todo-addtask").prepend(addtaskHTML))
-                .success(response => $("div.todo-taskdone").css("display", "hide"))
-                .success(response => $("div.todo-taskdone").prepend(taskdoneHTML))
-                .success(response => $("div.todo-done").css("display", "hide"))
-                .success(response => $("div.todo-done").prepend(tododoneHTML))
-
-        })
     })
 }
 

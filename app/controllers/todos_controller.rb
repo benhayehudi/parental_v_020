@@ -36,9 +36,9 @@ class TodosController < ApplicationController
     @todo.update(todo_params)
     @todo.save
     if @todo.done == false
-      redirect_to request.referrer
+      redirect_to parent_todo_path(@todo)
     else
-      redirect_to parent_path(@todo)
+      redirect_to parent_todo_path(@todo)
     end
   end
 

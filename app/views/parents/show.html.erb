@@ -48,7 +48,7 @@
 
 <div class="todo-address">
 
-  <%= form_for([current_user, @current_todo]) do |f| %>
+  <%= form_for([current_user, @current_todo], :html => {:id => 'address-form'}) do |f| %>
     <%= f.label :address, "add an address:" %><br>
     <%= f.text_field :address, :placeholder => 'enter a street address', size: 22 %>
     <br>
