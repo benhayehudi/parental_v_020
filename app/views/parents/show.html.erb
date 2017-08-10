@@ -38,8 +38,8 @@
     <% @todos.each do |todo| %>
       <% if todo.done == false %>
         <strong><a href="/parents/<%= @parent.id %>/todos/<%= todo.id %>" class="load_todo"><%= todo.title %></a></strong>
-      <br>
       <% end %>
+      <br>
     <% end%>
     </div>
     
@@ -57,7 +57,7 @@
 </div>
 
 <div class="todo-description">
-<%= form_for([current_user, @current_todo]) do |f| %>
+<%= form_for([current_user, @current_todo], :html => {:id => 'description-form'}) do |f| %>
   <%= f.label :description, "add some info" %>
   <br>
   <%= f.text_area :description %>
@@ -69,7 +69,7 @@
 
 
 <div class="todo-duedate">
-<%= form_for([current_user, @current_todo]) do |f| %>
+<%= form_for([current_user, @current_todo], :html => {:id => 'duedate-form'}) do |f| %>
   <%= f.label :duedate, "needs to get done by?" %>
   <br>
   <%= f.date_field :duedate, :value => @current_todo.duedate %>
@@ -81,7 +81,7 @@
 
 
 <div class="todo-addtask">
-<%= form_for([current_user, @current_todo, @task]) do |f| %>
+<%= form_for([current_user, @current_todo, @task], :html => {:id => 'addtask-form'}) do |f| %>
   <%= f.text_field :title, :placeholder => 'what needs to get done?', size: 22 %>
   <%= f.hidden_field :parent_id, :value => current_user.id %>
   <%= f.hidden_field :todo_id, :value => @current_todo.id %>
@@ -96,7 +96,7 @@
 
 
 <div class="todo-done">
-<%= form_for([current_user, @current_todo]) do |f| %>
+<%= form_for([current_user, @current_todo], :html => {:id => 'tododone-form'}) do |f| %>
   <%= f.label "yes?" %>
   <%= f.radio_button :done, "true" %>
   <%= f.label "no?" %>

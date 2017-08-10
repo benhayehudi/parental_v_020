@@ -49,7 +49,7 @@ Todo.prototype.submitForm = function() {
             .success(response => $("div.todo-done").prepend(tododoneHTML))
             .success(response => $("input[type=submit]").removeAttr("disabled"))
     })
-    $("#submit-description").on("submit", function(e) {
+    $("#description-form").on("submit", function(e) {
         e.preventDefault()
         var $form = $(this);
         var action = $form.attr("action");
@@ -71,9 +71,10 @@ Todo.prototype.submitForm = function() {
             .success(response => $("div.todo-taskdone").prepend(taskdoneHTML))
             .success(response => $("div.todo-done").css("display", "block"))
             .success(response => $("div.todo-done").prepend(tododoneHTML))
+            .success(response => $("input[type=submit]").removeAttr("disabled"))
 
     })
-    $("#submit-task").on("submit", function(e) {
+    $("#duedate-form").on("submit", function(e) {
         e.preventDefault()
         var $form = $(this);
         var action = $form.attr("action");
@@ -95,9 +96,10 @@ Todo.prototype.submitForm = function() {
             .success(response => $("div.todo-taskdone").prepend(taskdoneHTML))
             .success(response => $("div.todo-done").css("display", "block"))
             .success(response => $("div.todo-done").prepend(tododoneHTML))
+            .success(response => $("input[type=submit]").removeAttr("disabled"))
     })
 
-    $("#submit-duedate").on("submit", function(e) {
+    $("#addtask-form").on("submit", function(e) {
         e.preventDefault()
         var $form = $(this);
         var action = $form.attr("action");
@@ -119,9 +121,9 @@ Todo.prototype.submitForm = function() {
             .success(response => $("div.todo-taskdone").prepend(taskdoneHTML))
             .success(response => $("div.todo-done").css("display", "block"))
             .success(response => $("div.todo-done").prepend(tododoneHTML))
-
+            .success(response => $("input[type=submit]").removeAttr("disabled"))
     })
-    $("#submit-tododone").on("submit", function(e) {
+    $("#tododone-form").on("submit", function(e) {
         e.preventDefault()
         var $form = $(this);
         var action = $form.attr("action");
@@ -143,6 +145,7 @@ Todo.prototype.submitForm = function() {
             .success(response => $("div.todo-taskdone").prepend(taskdoneHTML))
             .success(response => $("div.todo-done").css("display", "hide"))
             .success(response => $("div.todo-done").prepend(tododoneHTML))
+        location.reload();
 
     })
 }
