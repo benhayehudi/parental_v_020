@@ -168,10 +168,9 @@ $(function() {
 $(document).on('ready', function(e) {
     $('a.load_todo').on("click", function(e) {
         e.preventDefault()
-        $.get({
-            url: this.href,
-            data: { id: this.href.split("/")[6] }
-        }).success(function(json) {
+        var todoId = parseInt(this.dataset.todoid)
+        var parentId = parseInt(this.dataset.parentid)
+        $.get("/parents/" + parentId + "/todos/" + todoId).success(function(json) {
             var taskdoneHTML = ''
             var addtaskHTML = ''
             var headerHTML = `<h3 class="panel-title">${json.title}</h3>`
