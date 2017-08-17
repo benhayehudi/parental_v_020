@@ -12,7 +12,6 @@ class ParentsController < ApplicationController
     @todos = all_todos(@parent)
     @tasks = current_user.tasks.where(todo_id: params[:id])
     @task = @todo.tasks.build
-    latetodos = @todos.late_todos
   end
 
   private
