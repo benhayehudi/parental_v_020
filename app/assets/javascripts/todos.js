@@ -47,69 +47,74 @@ function renderParentPage() {
     $("div.todo-addtask").css("display", "hide");
     $("div.todo-taskdone").css("display", "hide");
     $("div.todo-done").css("display", "hide");
+    $("input[type=submit]").removeAttr("disabled")
 }
 
 // Event Listeners 
-$("#address-form").on("submit", function(e) {
-    e.preventDefault()
-    var action = $(this).attr("action");
-    var params = $(this).serialize();
+$(document).ready(function() {
+    $("#address-form").on("submit", function(e) {
+        e.preventDefault()
+        var action = $(this).attr("action");
+        var params = $(this).serialize();
 
-    TodoApiService.updateTodo(action, params, renderTodoCard);
+        TodoApiService.updateTodo(action, params, renderTodoCard);
+    })
+
+    $("#description-form").on("submit", function(e) {
+        e.preventDefault()
+        var action = $(this).attr("action");
+        var params = $(this).serialize();
+
+        TodoApiService.updateTodo(action, params, renderTodoCard);
+    })
+
+    $("#duedate-form").on("submit", function(e) {
+        e.preventDefault()
+        var $form = $(this);
+        var action = $form.attr("action");
+        var params = $form.serialize();
+
+        TodoApiService.updateTodo(action, params, renderTodoCard)
+    })
+
+    $("#addtask-form").on("submit", function(e) {
+        e.preventDefault()
+        var $form = $(this);
+        var action = $form.attr("action");
+        var params = $form.serialize();
+
+        TodoApiService.updateTodo(action, params, renderTodoCard)
+    })
+
+    $("#tododone-form").on("submit", function(e) {
+        e.preventDefault()
+        var $form = $(this);
+        var action = $form.attr("action");
+        var params = $form.serialize();
+
+        TodoApiService.updateTodo(action, params, renderParentPage)
+    })
+
+    $("form#new_todo").on("submit", function(e) {
+        e.preventDefault()
+        var $form = $(this);
+        var action = $form.attr("action");
+        var params = $form.serialize();
+        todo = new Todo(params)
+        debugger
+
+        TodoApiService.newTodo(action, params, renderParentPage)
+    })
+
+    $('a.load_todo').on("click", function(e) {
+        e.preventDefault()
+        var todoId = parseInt(this.dataset.todoid)
+        var parentId = parseInt(this.dataset.parentid)
+
+        TodoApiService.loadTodo(action, params, renderTodoCard)
+    })
 })
 
-$("#description-form").on("submit", function(e) {
-    e.preventDefault()
-    var action = $(this).attr("action");
-    var params = $(this).serialize();
-
-    TodoApiService.updateTodo(action, params, renderTodoCard);
-})
-
-$("#duedate-form").on("submit", function(e) {
-    e.preventDefault()
-    var $form = $(this);
-    var action = $form.attr("action");
-    var params = $form.serialize();
-
-    TodoApiService.updateTodo(action, params, renderTodoCard)
-})
-
-$("#addtask-form").on("submit", function(e) {
-    e.preventDefault()
-    var $form = $(this);
-    var action = $form.attr("action");
-    var params = $form.serialize();
-
-    TodoApiService.updateTodo(action, params, renderTodoCard)
-})
-
-$("#tododone-form").on("submit", function(e) {
-    e.preventDefault()
-    var $form = $(this);
-    var action = $form.attr("action");
-    var params = $form.serialize();
-
-    TodoApiService.updateTodo(action, params, renderParentPage)
-})
-
-$("form#new_todo").on("submit", function(e) {
-    e.preventDefault()
-    var $form = $(this);
-    var action = $form.attr("action");
-    var params = $form.serialize();
-    $("input[type=submit]").removeAttr("disabled")
-
-    TodoApiService.newTodo(action, params, renderParentPage)
-})
-
-$('a.load_todo').on("click", function(e) {
-    e.preventDefault()
-    var todoId = parseInt(this.dataset.todoid)
-    var parentId = parseInt(this.dataset.parentid)
-
-    TodoApiService.loadTodo(action, params, renderTodoCard)
-})
 
 // API SERVICE 
 const TodoApiService = {
@@ -132,7 +137,7 @@ const TodoApiService = {
 
 // Todo.prototype Functions
 Todo.prototype.getHeaderString = function() {
-    return `<h3 class="panel-title">${json.title}</h3>`;
+    return `<h3 class="panel-title">${this.title}</h3>`;
 }
 
 Todo.prototype.getDueDateString = function() {
@@ -190,17 +195,17 @@ Todo.prototype.getTasksString = function() {
 // Todo.prototype render DOM elements functions
 Todo.prototype.renderTodoListing = function() {
     return (`
-        <div id="todoid-` + response.id + `">
+        <div id="todoid-` + this.id + `">
             <strong>
                 <a href="/parents/` +
-        response.parent_id +
+        this.parent_id +
         `/todos/` +
-        response.id +
+        this.id +
         `"` +
         `class="todo-id-` +
-        response.id +
+        this.id +
         `">` +
-        response.title +
+        this.title +
         `</a>
             </strong>
             <br>
