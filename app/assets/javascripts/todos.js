@@ -18,7 +18,7 @@ Todo.error = function(response) {
 }
 
 // DOM Manipulation Functions
-function renderTodoPage() {
+function renderTodoCard() {
     $('div.todo-content').html("");
     $('div.panel-heading').html("");
     $('div.panel-heading').html(headerHTML);
@@ -55,7 +55,7 @@ $("#address-form").on("submit", function(e) {
     var action = $(this).attr("action");
     var params = $(this).serialize();
 
-    TodoApiService.updateTodo(action, params, renderTodoPage);
+    TodoApiService.updateTodo(action, params, renderTodoCard);
 })
 
 $("#description-form").on("submit", function(e) {
@@ -63,7 +63,7 @@ $("#description-form").on("submit", function(e) {
     var action = $(this).attr("action");
     var params = $(this).serialize();
 
-    TodoApiService.updateTodo(action, params, renderTodoPage);
+    TodoApiService.updateTodo(action, params, renderTodoCard);
 })
 
 $("#duedate-form").on("submit", function(e) {
@@ -72,7 +72,7 @@ $("#duedate-form").on("submit", function(e) {
     var action = $form.attr("action");
     var params = $form.serialize();
 
-    TodoApiService.updateTodo(action, params, renderTodoPage)
+    TodoApiService.updateTodo(action, params, renderTodoCard)
 })
 
 $("#addtask-form").on("submit", function(e) {
@@ -81,7 +81,7 @@ $("#addtask-form").on("submit", function(e) {
     var action = $form.attr("action");
     var params = $form.serialize();
 
-    TodoApiService.updateTodo(action, params, renderTodoPage)
+    TodoApiService.updateTodo(action, params, renderTodoCard)
 })
 
 $("#tododone-form").on("submit", function(e) {
@@ -98,10 +98,19 @@ $("form#new_todo").on("submit", function(e) {
     var $form = $(this);
     var action = $form.attr("action");
     var params = $form.serialize();
+    $('#todo-list').append(todo.renderTodoListing());
+    $("input[type=submit]").removeAttr("disabled")
 
     TodoApiService.newTodo(action, params, renderParentPage)
 })
 
+$('a.load_todo').on("click", function(e) {
+    e.preventDefault()
+    var todoId = parseInt(this.dataset.todoid)
+    var parentId = parseInt(this.dataset.parentid)
+
+    TodoApiService.loadTodo(action, params, renderTodoCard)
+})
 
 // API SERVICE 
 const TodoApiService = {
@@ -109,99 +118,38 @@ const TodoApiService = {
     updateTodo(action, params, callback) {
         $.post(action, params)
             .success(response => callback());
-    }
+    },
 
     newTodo(action, params, callback) {
         $.post(action, params)
             .success(response => callback());
+    },
+
+    loadTodo(action, params, callback) {
+        $.get("/parents/" + parentId + "/todos/" + todoId)
+            .success(response => callback());
     }
 }
 
-Todo.prototype.submitForm = function() {
+// Todo.prototype Functions
+Todo.prototype.getHeaderString = function() {
+    return `<h3 class="panel-title">${json.title}</h3>`;
+}
 
+Todo.prototype.getDueDateString = function() {
+    return `<h4>what do you need to do?</h4>`;
+}
 
-
-$(function() {
-
-
-    $.post(action, params)
-        .success(response => $("#todo-list").prepend(
-            `<div id="todoid-` + response.id + `"><strong><a href="/parents/` + response.parent_id + `/todos/` + response.id + `"` + `class="todo-id-` + response.id + `">` + response.title + `</a></strong><br></div>`))
-        .success(response => $("input[type=submit]").removeAttr("disabled"))
-        .error(Todo.error)
-})
-})
-
-$(document).on('ready', function(e) {
-    $('a.load_todo').on("click", function(e) {
-        e.preventDefault()
-        var todoId = parseInt(this.dataset.todoid)
-        var parentId = parseInt(this.dataset.parentid)
-        $.get("/parents/" + parentId + "/todos/" + todoId).success(function(json) {
-            var taskdoneHTML = ''
-            var addtaskHTML = ''
-            var headerHTML = `<h3 class="panel-title">${json.title}</h3>`
-            var addressHTML = `<div class="panel-body">`
-            if (json.address == null || json.address == "") {
-                addressHTML += `no address supplied<br>`
-            } else {
-                addressHTML += `<iframe width="200" height="150" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCkIkw32ps5odw1KNV7wtdteXOyk1B69RE &q=${json.address}" allowfullscreen> </iframe>`
-            }
-            if (json.description == null) {
-                var descriptionHTML = ``
-            } else {
-                var descriptionHTML = `<h4>some info:</h4>`
-                descriptionHTML += json.description
-            }
-            descriptionHTML += `<br><br>`
-            var duedateHTML = `<h4>what do you need to do?</h4>`
-            if (!json.tasks) {
-                addtaskHTML += `no tasks for this todo yet`
-            } else {
-                json.tasks.forEach(function(task) {
-                    if (task.done == false) {
-                        taskdoneHTML += `${task.title}<br>`
-                    } else {
-                        taskdoneHTML = ''
-                    }
-                })
-            }
-
-            var tododoneHTML = `<h4>are you done?</h4>`
-
-            $('div.todo-content').html("")
-
-            $('div.panel-heading').html("")
-            $('div.panel-heading').html(headerHTML)
-
-            $("div.todo-address").css("display", "block");
-            $("div.todo-address").prepend(addressHTML)
-
-            $("div.todo-description").css("display", "block");
-            $("div.todo-description").prepend(descriptionHTML)
-
-            $("div.todo-duedate").css("display", "block");
-            $("div.todo-duedate").prepend(duedateHTML)
-
-            $("div.todo-addtask").css("display", "block");
-            $("div.todo-addtask").prepend(addtaskHTML)
-
-            $("div.todo-taskdone").css("display", "block");
-            $("div.todo-taskdone").prepend(taskdoneHTML)
-
-            $("div.todo-done").css("display", "block");
-            $("div.todo-done").prepend(tododoneHTML)
-
-            const todo = new Todo(json)
-            $('#todos-list').append(todo.renderTodoCard());
-            t.submitForm();
-        });
-    })
-})
+Todo.prototype.getTodoDoneString = function() {
+    return `<h4>are you done?</h4>`;
+}
 
 Todo.prototype.getAddressString = function() {
     if (this.address == null || this.address == "") {
-        return `no address supplied<br>`;
+        return (`
+        <div class="panel-body">
+        no address supplied<br>
+        `);
     }
     return (`
         <iframe 
@@ -214,9 +162,60 @@ Todo.prototype.getAddressString = function() {
     `);
 }
 
+Todo.prototype.getDescriptionString = function() {
+    if (this.description == null) {
+        return '';
+    }
+    return (`
+        <h4>some info:</h4><br>` +
+        this.description
+
+        `<br><br>
+    `);
+}
+
+Todo.prototype.getTasksString = function() {
+    if (!this.tasks) {
+        return `no tasks for this todo yet`;
+    } else {
+        this.tasks.forEach(function(task) {
+            if (task.done == false) {
+                return `${task.title}<br>`;
+            } else {
+                return '';
+            }
+        })
+    }
+}
+
+// Todo.prototype render DOM elements functions
+Todo.prototype.renderTodoListing = function() {
+    return (`
+        <div id="todoid-` + response.id + `">
+            <strong>
+                <a href="/parents/` +
+        response.parent_id +
+        `/todos/` +
+        response.id +
+        `"` +
+        `class="todo-id-` +
+        response.id +
+        `">` +
+        response.title +
+        `</a>
+            </strong>
+            <br>
+        </div>
+    `);
+}
+
 Todo.prototype.renderTodoCard = function() {
+    const headerString = this.getHeaderString()
     const addressString = this.getAddressString()
     const descriptionString = this.getDecriptionString()
+    const tasksString = this.getTasksString()
+    const duedateString = this.getDueDateString()
+    const tododoneString = this.getTodoDoneString()
 
     return (`
         <div>
