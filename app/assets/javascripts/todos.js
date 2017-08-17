@@ -21,26 +21,26 @@ Todo.error = function(response) {
 function renderTodoCard() {
     $('div.todo-content').html("");
     $('div.panel-heading').html("");
-    $('div.panel-heading').html(headerHTML);
+    $('div.panel-heading').html(todo.getHeaderString());
     $("div.todo-address").css("display", "block");
-    $("div.todo-address").prepend(addressHTML);
+    $("div.todo-address").prepend(todo.getAddressString());
     $("div.todo-description").css("display", "block");
-    $("div.todo-description").prepend(descriptionHTML);
+    $("div.todo-description").prepend(todo.getDescriptionString());
     $("div.todo-duedate").css("display", "block");
-    $("div.todo-duedate").prepend(duedateHTML);
+    $("div.todo-duedate").prepend(todo.getDueDateString());
     $("div.todo-addtask").css("display", "block");
-    $("div.todo-addtask").prepend(addtaskHTML);
+    $("div.todo-addtask").prepend(todo.getAddTaskString());
     $("div.todo-taskdone").css("display", "block");
-    $("div.todo-taskdone").prepend(taskdoneHTML);
+    $("div.todo-taskdone").prepend(todo.getTaskDoneString());
     $("div.todo-done").css("display", "block");
-    $("div.todo-done").prepend(tododoneHTML);
+    $("div.todo-done").prepend(todo.getTodoDoneString());
     $("input[type=submit]").removeAttr("disabled");
 }
 
 function renderParentPage() {
-    $('div.todo-content').html("");
+    $('div.todo-list').prepend(todo.renderTodoListing());
     $('div.panel-heading').html("");
-    $('div.panel-heading').html(headerHTML);
+    $('div.panel-heading').html(todo.getHeaderString());
     $("div.todo-address").css("display", "hide");
     $("div.todo-description").css("display", "hide");
     $("div.todo-duedate").css("display", "hide");
