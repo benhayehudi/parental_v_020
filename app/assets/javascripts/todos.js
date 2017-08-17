@@ -38,7 +38,7 @@ function renderTodoCard() {
 }
 
 function renderParentPage() {
-    $('div.todo-list').prepend(todo.renderTodoListing());
+    $('div.todo-list').append(todo.renderTodoListing());
     $('div.panel-heading').html("");
     $('div.panel-heading').html(todo.getHeaderString());
     $("div.todo-address").css("display", "hide");
@@ -98,7 +98,6 @@ $("form#new_todo").on("submit", function(e) {
     var $form = $(this);
     var action = $form.attr("action");
     var params = $form.serialize();
-    $('#todo-list').append(todo.renderTodoListing());
     $("input[type=submit]").removeAttr("disabled")
 
     TodoApiService.newTodo(action, params, renderParentPage)
@@ -209,19 +208,19 @@ Todo.prototype.renderTodoListing = function() {
     `);
 }
 
-Todo.prototype.renderTodoCard = function() {
-    const headerString = this.getHeaderString()
-    const addressString = this.getAddressString()
-    const descriptionString = this.getDecriptionString()
-    const tasksString = this.getTasksString()
-    const duedateString = this.getDueDateString()
-    const tododoneString = this.getTodoDoneString()
+// Todo.prototype.renderTodoCard = function() {
+//     const headerString = this.getHeaderString()
+//     const addressString = this.getAddressString()
+//     const descriptionString = this.getDecriptionString()
+//     const tasksString = this.getTasksString()
+//     const duedateString = this.getDueDateString()
+//     const tododoneString = this.getTodoDoneString()
 
-    return (`
-        <div>
-            <h1>${this.name}</h1>
-            <p>${descriptionString}</p>
-            <p>${addressString}</p>
-        </div>
-    `);
-}
+//     return (`
+//         <div>
+//             <h1>${this.name}</h1>
+//             <p>${descriptionString}</p>
+//             <p>${addressString}</p>
+//         </div>
+//     `);
+// }
