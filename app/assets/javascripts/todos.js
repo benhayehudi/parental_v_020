@@ -6,10 +6,15 @@
 // No Repeated Code
 
 class Todo {
-    constructor(attributes) {
-        for (var key in attributes) {
-            this[key] = attributes[key];
-        }
+    constructor(id, parent_id, title, description, address, done, duedate, tasks) {
+        this.title = title
+        this.description = description
+        this.id = id
+        this.address = address
+        this.done = done
+        this.duedate = duedate
+        this.parent_id = parent_id
+        this.tasks = tasks
     }
 }
 
@@ -48,6 +53,7 @@ function renderParentPage() {
     $("div.todo-taskdone").css("display", "hide");
     $("div.todo-done").css("display", "hide");
     $("input[type=submit]").removeAttr("disabled")
+    location.reload();
 }
 
 // Event Listeners 
@@ -100,8 +106,10 @@ $(document).ready(function() {
         var $form = $(this);
         var action = $form.attr("action");
         var params = $form.serialize();
-        todo = new Todo(params)
-        debugger
+        todo = new Todo();
+        todo.title = $('input[name="todo[title]"').val();
+        todo.address = $('input[name="todo[address]"').val();
+        todo.tasks = $('input[name="todo[tasks_attributes][0][title]"').val();
 
         TodoApiService.newTodo(action, params, renderParentPage)
     })
