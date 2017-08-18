@@ -27,7 +27,7 @@ class TodosController < ApplicationController
   def show
     find_todo(@todo)
     @tasks = current_user.tasks.where(todo_id: params[:id])
-    @task = @todo.tasks.build
+    # @task = @todo.tasks.build
     render :json => @todo
   end
 

@@ -36,10 +36,8 @@ function renderTodoCard(todo) {
     $("input[type=submit]").removeAttr("disabled");
 }
 
-function renderParentPage() {
-    $('div.todo-list').append(todo.renderTodoListing());
-    $('div.panel-heading').html("");
-    $('div.panel-heading').html(todo.getHeaderString());
+function renderParentPage(todo) {
+    $('div.todo-list').append(todo.renderTodoListing(todo));
     $("div.todo-address").css("display", "hide");
     $("div.todo-description").css("display", "hide");
     $("div.todo-duedate").css("display", "hide");
@@ -95,12 +93,11 @@ $(document).ready(function() {
         e.preventDefault()
         var action = $(this).attr("action");
         var params = $(this).serialize();
-        todo = new Todo();
-        todo.title = $('input[name="todo[title]"').val();
-        todo.address = $('input[name="todo[address]"').val();
-        todo.tasks = $('input[name="todo[tasks_attributes][0][title]"').val();
+        const todoTitle = $('input[name="todo[title]"').val();
+        const todoAddress = $('input[name="todo[address]"').val();
+        const todoTasks = $('input[name="todo[tasks_attributes][0][title]"').val();
 
-        TodoApiService.newTodo(action, params, renderParentPage);
+        TodoApiService.newTodo(action, params, todoTitle, todoAddress, todoTasks, renderParentPage);
     })
 
     $('a.load_todo').on("click", function(e) {
@@ -122,9 +119,20 @@ const TodoApiService = {
             .then(response => callback());
     },
 
-    newTodo(action, params, callback) {
-        $.post(action, params)
-            .success(response => callback());
+    newTodo(action, params, todoTitle, todoAddress, todoTasks, callback) {
+        $.post(action, params, function(todo) {
+            var todo = new Todo(
+                todo.todo_id,
+                todo.parent_id,
+                todo.title = todoTitle,
+                todo.description,
+                todo.address = todoAddress,
+                todo.done,
+                todo.duedate,
+                todo.tasks = todoTasks
+            )
+            renderParentPage(todo);
+        })
     },
 
     loadTodo(parentId, todoId, callback) {
@@ -141,7 +149,6 @@ const TodoApiService = {
             )
             renderTodoCard(todo);
         })
-
     }
 }
 
@@ -202,12 +209,12 @@ Todo.prototype.getTasksString = function(todo) {
     }
 }
 
-Todo.prototype.renderTodoListing = function() {
+Todo.prototype.renderTodoListing = function(todo) {
     return (`
-        <div id="todoid-${this.id}">
+        <div id="todoid-${todo.id}">
             <strong>
-                <a href="/parents/${this.parent_id}/todos/${this.id}" 
-                class="todo-id-${this.id}">${this.title}
+                <a href="/parents/${todo.parent_id}/todos/${todo.id}" 
+                class="todo-id-${todo.id}">${todo.title}
                 </a>
             </strong>
             <br>
