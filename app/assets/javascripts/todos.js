@@ -19,22 +19,21 @@ class Todo {
 }
 
 // DOM Manipulation Functions
-function renderTodoCard() {
+function renderTodoCard(todo) {
     $('div.todo-content').html("");
     $('div.panel-heading').html("");
-    $('div.panel-heading').html(todo.getHeaderString());
+    $('div.panel-heading').html(todo.getHeaderString(todo));
     $("div.todo-address").css("display", "block");
-    $("div.todo-address").prepend(todo.getAddressString());
+    $("div.todo-address").prepend(todo.getAddressString(todo));
     $("div.todo-description").css("display", "block");
-    $("div.todo-description").prepend(todo.getDescriptionString());
+    $("div.todo-description").prepend(todo.getDescriptionString(todo));
     $("div.todo-duedate").css("display", "block");
-    $("div.todo-duedate").prepend(todo.getDueDateString());
+    $("div.todo-duedate").prepend(todo.getDueDateString(todo));
     $("div.todo-addtask").css("display", "block");
-    $("div.todo-addtask").prepend(todo.getTasksString());
+    $("div.todo-addtask").prepend(todo.getTasksString(todo));
     $("div.todo-done").css("display", "block");
-    $("div.todo-done").prepend(todo.getTodoDoneString());
+    $("div.todo-done").prepend(todo.getTodoDoneString(todo));
     $("input[type=submit]").removeAttr("disabled");
-    debugger
 }
 
 function renderParentPage() {
@@ -109,7 +108,7 @@ $(document).ready(function() {
         const parentId = this.dataset.parentid
         const todoId = this.dataset.todoid
 
-        TodoApiService.loadTodo(parentId, todoId, renderTodoCard(todo));
+        TodoApiService.loadTodo(parentId, todoId, renderTodoCard);
     })
 })
 
@@ -130,37 +129,37 @@ const TodoApiService = {
 
     loadTodo(parentId, todoId, callback) {
         $.get("/parents/" + (parentId) + "/todos/" + (todoId), function(todo) {
-                var todo = new Todo(
-                    todo.todo_id = todoId,
-                    todo.parent_id = parentId,
-                    todo.title,
-                    todo.description,
-                    todo.address,
-                    todo.done,
-                    todo.duedate,
-                    todo.tasks
-                )
-                debugger
-            })
-            .success(response => callback());
+            var todo = new Todo(
+                todo.todo_id = todoId,
+                todo.parent_id = parentId,
+                todo.title,
+                todo.description,
+                todo.address,
+                todo.done,
+                todo.duedate,
+                todo.tasks
+            )
+            renderTodoCard(todo);
+        })
+
     }
 }
 
 
 // Todo.prototype Functions
-Todo.prototype.getHeaderString = function() {
+Todo.prototype.getHeaderString = function(todo) {
     return `<h3 class="panel-title">${todo.title}</h3>`;
 }
 
-Todo.prototype.getDueDateString = function() {
+Todo.prototype.getDueDateString = function(todo) {
     return `<h4>what do you need to do?</h4>`;
 }
 
-Todo.prototype.getTodoDoneString = function() {
+Todo.prototype.getTodoDoneString = function(todo) {
     return `<h4>are you done?</h4>`;
 }
 
-Todo.prototype.getAddressString = function() {
+Todo.prototype.getAddressString = function(todo) {
     if (todo.address == null || todo.address == "") {
         return (`
         <div class="panel-body">
@@ -178,7 +177,7 @@ Todo.prototype.getAddressString = function() {
     `);
 }
 
-Todo.prototype.getDescriptionString = function() {
+Todo.prototype.getDescriptionString = function(todo) {
     if (todo.description == null) {
         return '';
     }
@@ -189,7 +188,7 @@ Todo.prototype.getDescriptionString = function() {
     `);
 }
 
-Todo.prototype.getTasksString = function() {
+Todo.prototype.getTasksString = function(todo) {
     if (!todo.tasks) {
         return `no tasks for this todo yet`;
     } else {
