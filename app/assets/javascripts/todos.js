@@ -19,7 +19,7 @@ class Todo {
 }
 
 // DOM Manipulation Functions
-Todo.prototype.renderTodoCard = function() {
+function renderTodoCard() {
     $('div.todo-content').html("");
     $('div.panel-heading').html("");
     $('div.panel-heading').html(todo.getHeaderString());
