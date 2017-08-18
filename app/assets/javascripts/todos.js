@@ -107,10 +107,13 @@ $(document).ready(function() {
 
     $('a.load_todo').on("click", function(e) {
         e.preventDefault()
-        var todoId = parseInt(this.dataset.todoid)
-        var parentId = parseInt(this.dataset.parentid)
+        window.todoId = parseInt(this.dataset.todoid)
+        window.parentId = parseInt(this.dataset.parentid)
+        todo = new Todo();
+        todo.id = window.todoId;
+        todo.parent_id = window.parentId;
 
-        TodoApiService.loadTodo(action, params, renderTodoCard)
+        TodoApiService.loadTodo(todo)
     })
 })
 
@@ -128,9 +131,19 @@ const TodoApiService = {
             .success(response => callback());
     },
 
-    loadTodo(action, params, callback) {
-        $.get("/parents/" + parentId + "/todos/" + todoId)
-            .success(response => callback());
+    loadTodo(todo) {
+        $.get("/parents/" + window.parentId + "/todos/" + window.todoId)
+            .success(response => [
+                response.tasks = todo.tasks,
+                response.description = todo.description,
+                response.duedate = todo.duedate,
+                response.address = todo.address,
+                response.done = todo.done,
+                response.id = todo.id,
+                response.parent_id = todo.parent_id
+            ])
+            .then(response => console.log(response))
+            .then(response => renderTodoCard())
     }
 }
 
