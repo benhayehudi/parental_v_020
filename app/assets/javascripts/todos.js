@@ -112,6 +112,12 @@ $(document).ready(function() {
         todo = new Todo();
         todo.id = window.todoId;
         todo.parent_id = window.parentId;
+        todo.address = this.dataset.address;
+        todo.tasks = this.dataset.tasks;
+        todo.description = this.dataset.description;
+        todo.title = this.dataset.title;
+        todo.done = this.dataset.done;
+        todo.duedate = this.dataset.duedate;
 
         TodoApiService.loadTodo(todo)
     })
@@ -133,23 +139,14 @@ const TodoApiService = {
 
     loadTodo(todo) {
         $.get("/parents/" + window.parentId + "/todos/" + window.todoId)
-            .success(response => [
-                response.tasks = todo.tasks,
-                response.description = todo.description,
-                response.duedate = todo.duedate,
-                response.address = todo.address,
-                response.done = todo.done,
-                response.id = todo.id,
-                response.parent_id = todo.parent_id
-            ])
-            .then(response => console.log(response))
-            .then(response => renderTodoCard())
+            .success(response => renderTodoCard())
+        debugger
     }
 }
 
 // Todo.prototype Functions
 Todo.prototype.getHeaderString = function() {
-    return `<h3 class="panel-title">${this.title}</h3>`;
+    return `<h3 class="panel-title">${todo.title}</h3>`;
 }
 
 Todo.prototype.getDueDateString = function() {
@@ -161,7 +158,7 @@ Todo.prototype.getTodoDoneString = function() {
 }
 
 Todo.prototype.getAddressString = function() {
-    if (this.address == null || this.address == "") {
+    if (todo.address == null || todo.address == "") {
         return (`
         <div class="panel-body">
         no address supplied<br>
@@ -179,21 +176,21 @@ Todo.prototype.getAddressString = function() {
 }
 
 Todo.prototype.getDescriptionString = function() {
-    if (this.description == null) {
+    if (todo.description == null) {
         return '';
     }
     return (`
         <h4>some info:</h4>
-        ${this.description}
+        ${todo.description}
         <br><br>
     `);
 }
 
 Todo.prototype.getTasksString = function() {
-    if (!this.tasks) {
+    if (!todo.tasks) {
         return `no tasks for this todo yet`;
     } else {
-        this.tasks.forEach(function(task) {
+        todo.tasks.forEach(function(task) {
             if (task.done == false) {
                 return `${task.title}<br>`;
             } else {

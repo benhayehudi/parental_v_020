@@ -37,7 +37,17 @@
     <div class="todo-list">
     <% @todos.each do |todo| %>
       <% if todo.done == false %>
-        <strong><a href="/parents/<%= @parent.id %>/todos/<%= todo.id %>" class="load_todo" data-todoid="<%= todo.id %>" data-parentid="<%= current_user.id %>"><%= todo.title %></a></strong>
+        <strong><a href="/parents/<%= @parent.id %>/todos/<%= todo.id %>" 
+                class="load_todo" 
+                data-todoid="<%= todo.id %>" 
+                data-parentid="<%= current_user.id %>" 
+                data-title="<%= todo.title %>" 
+                data-tasks="<%= todo.tasks %>" 
+                data-description="<%= todo.description %>"
+                data-done="<%= todo.done %>"
+                data-duedate="<%= todo.duedate %>"
+                data-address="<%= todo.address %>"
+                ><%= todo.title %></a></strong>
       <% end %>
       <br>
     <% end%>
