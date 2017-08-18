@@ -1,74 +1,16 @@
-<div class="panel panel-default">
-
-  <div class="panel-heading">
-    <h3 class="panel-title">welcome.</h3>
-  </div>
-
-  <div class="panel-body">
-
-    <div id="welcome-msg">
-      <img src="<%= current_user.image %>">&nbsp;<em>hi, <%= current_user.name.split(' ').first.downcase %>. what would you like to do?</em>
-    </div>
-
-    <br><br>
-
-    <div class="todo-content">
-
-    <h4>add something to do</h4>
-    <div id="main-todo-form">
-      <%= form_for([@parent, @todo]) do |f| %>
-       <%= f.text_field :title, :placeholder => 'what needs to get done?', size: 22 %>
-        <br>
-        <%= f.text_field :address, :placeholder => 'enter a street address', size: 22 %>
-        <br>
-        <%= f.fields_for :tasks, @todo.tasks.new do |t| %>
-          <%= t.text_field :title, :placeholder => 'add a todo', size: 22 %>
-          <%= t.hidden_field :parent_id, :value => @parent.id %>
-          <%= t.hidden_field :todo_id, :value => @todo.id %>
-        <% end %>
-        <br>
-        <%= f.submit "add todo", :id => 'todo-submit', :class => 'btn btn-primary' %>
-      <% end %>
-    </div>
-
-    <br><br>
-
-    <h4>your todo list</h4>
-    <div class="todo-list">
-    <% @todos.each do |todo| %>
-      <% if todo.done == false %>
-        <strong>
-          <a href="/parents/<%= @parent.id %>/todos/<%= todo.id %>" 
-            class="load_todo" 
-            data-todoid="<%= todo.id %>" 
-            data-parentid="<%= current_user.id %>" 
-            data-title="<%= todo.title %>" 
-            data-tasks="<%= todo.tasks.each do |task| end %>" 
-            data-description="<%= todo.description %>"
-            data-done="<%= todo.done %>"
-            data-duedate="<%= todo.duedate %>"
-            data-address="<%= todo.address %>"><%= todo.title %>
-          </a>
-        </strong>
-      <% end %>
-      <br>
-    <% end%>
-    </div>
-    
-    </div>
-  </div>
-
-
 <div class="todo-address">
+<% if @current_todo != nil %>
     <%= form_for([current_user, @current_todo], :html => {:id => 'address-form'}) do |f| %>
       <%= f.label :address, "add an address:" %><br>
       <%= f.text_field :address, :placeholder => 'enter a street address', size: 22 %>
       <br>
       <%= f.submit 'submit', :class => 'btn btn-primary', :id => 'submit-address' %>
     <% end %>
+  <% end %>
 </div>
 
 <div class="todo-description">
+<% if @current_todo != nil %>
   <%= form_for([current_user, @current_todo], :html => {:id => 'description-form'}) do |f| %>
     <%= f.label :description, "add some info" %>
     <br>
@@ -76,11 +18,13 @@
     <br>
     <%= f.submit 'add description', :class => 'btn btn-primary', :id => 'submit-description' %>
   <% end %>
+<% end %>
 <br>
 </div>
 
 
 <div class="todo-duedate">
+<% if @current_todo != nil %>
   <%= form_for([current_user, @current_todo], :html => {:id => 'duedate-form'}) do |f| %>
     <%= f.label :duedate, "needs to get done by?" %>
     <br>
@@ -88,17 +32,20 @@
     <br>
     <%= f.submit 'add due date', :class => 'btn btn-primary', :id => 'submit-duedate' %>
   <% end %>
+<% end %>
 <br>
 </div>
 
 
 <div class="todo-addtask">
+<% if @current_todo != nil %>
   <%= form_for([current_user, @current_todo, @task], :html => {:id => 'addtask-form'}) do |f| %>
     <%= f.text_field :title, :placeholder => 'what needs to get done?', size: 22 %>
     <%= f.hidden_field :parent_id, :value => current_user.id %>
     <%= f.hidden_field :todo_id, :value => @current_todo.id %>
     <%= f.submit 'add task', :class => 'btn btn-primary btn-sm', :id => 'submit-task' %>
   <% end %>
+<% end %>
   <br>
 </div>
 
@@ -108,6 +55,7 @@
 
 
 <div class="todo-done">
+<% if @current_todo != nil %>
   <%= form_for([current_user, @current_todo], :html => {:id => 'tododone-form'}) do |f| %>
     <%= f.label "yes?" %>
     <%= f.radio_button :done, "true" %>
@@ -116,9 +64,9 @@
     <br>
     <%= f.submit 'mark done', :class => 'btn btn-primary', :id => 'submit-tododone' %>
   <% end %>
+<% end %>
 <br>
 <%= link_to 'return to your todos', parent_path(@parent), :style => 'color: black'  %>
 </div>
-
 
 </div>

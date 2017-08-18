@@ -30,12 +30,13 @@ function renderTodoCard() {
     $("div.todo-duedate").css("display", "block");
     $("div.todo-duedate").prepend(todo.getDueDateString());
     $("div.todo-addtask").css("display", "block");
-    $("div.todo-addtask").prepend(todo.getAddTaskString());
-    $("div.todo-taskdone").css("display", "block");
-    $("div.todo-taskdone").prepend(todo.getTaskDoneString());
+    $("div.todo-addtask").prepend(todo.getTasksString());
+    // $("div.todo-taskdone").css("display", "block");
+    // $("div.todo-taskdone").prepend(todo.getTaskDoneString());
     $("div.todo-done").css("display", "block");
     $("div.todo-done").prepend(todo.getTodoDoneString());
     $("input[type=submit]").removeAttr("disabled");
+    debugger
 }
 
 function renderParentPage() {
@@ -128,8 +129,9 @@ $(document).ready(function() {
 const TodoApiService = {
 
     updateTodo(action, params, callback) {
-        $.post(action, params)
-            .success(response => callback());
+        $.post('#{:controller => "todos_controller", :action => "show"}', action, params)
+            .success($('div.todo-content').empty())
+            .then(response => callback());
     },
 
     newTodo(action, params, callback) {
@@ -140,7 +142,6 @@ const TodoApiService = {
     loadTodo(todo) {
         $.get("/parents/" + window.parentId + "/todos/" + window.todoId)
             .success(response => renderTodoCard())
-        debugger
     }
 }
 
@@ -190,7 +191,7 @@ Todo.prototype.getTasksString = function() {
     if (!todo.tasks) {
         return `no tasks for this todo yet`;
     } else {
-        todo.tasks.forEach(function(task) {
+        Array.from(todo.tasks).forEach(function(task) {
             if (task.done == false) {
                 return `${task.title}<br>`;
             } else {
