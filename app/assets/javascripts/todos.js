@@ -31,8 +31,6 @@ function renderTodoCard() {
     $("div.todo-duedate").prepend(todo.getDueDateString());
     $("div.todo-addtask").css("display", "block");
     $("div.todo-addtask").prepend(todo.getTasksString());
-    // $("div.todo-taskdone").css("display", "block");
-    // $("div.todo-taskdone").prepend(todo.getTaskDoneString());
     $("div.todo-done").css("display", "block");
     $("div.todo-done").prepend(todo.getTodoDoneString());
     $("input[type=submit]").removeAttr("disabled");
