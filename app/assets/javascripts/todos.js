@@ -93,19 +93,22 @@ $(document).ready(function() {
         e.preventDefault()
         var action = $(this).attr("action");
         var params = $(this).serialize();
-        const todoTitle = $('input[name="todo[title]"').val();
-        const todoAddress = $('input[name="todo[address]"').val();
-        const todoTasks = $('input[name="todo[tasks_attributes][0][title]"').val();
 
-        TodoApiService.newTodo(action, params, todoTitle, todoAddress, todoTasks, renderParentPage);
+        TodoApiService.newTodo(action, params, renderParentPage);
     })
 
     $('a.load_todo').on("click", function(e) {
         e.preventDefault()
         const parentId = this.dataset.parentid
         const todoId = this.dataset.todoid
+        const address = this.dataset.address
+        const tasks = this.dataset.tasks
+        const description = this.dataset.description
+        const done = this.dataset.done
+        const duedate = this.dataset.duedate
+        const title = this.dataset.title
 
-        TodoApiService.loadTodo(parentId, todoId, renderTodoCard);
+        TodoApiService.loadTodo(parentId, todoId, address, tasks, description, done, duedate, title, renderTodoCard);
     })
 })
 
@@ -114,38 +117,38 @@ $(document).ready(function() {
 const TodoApiService = {
 
     updateTodo(action, params, callback) {
-        $.post('#{:controller => "todos_controller", :action => "show"}', action, params)
-            .success($('div.todo-content').empty())
-            .then(response => callback());
+        $.post(action, params)
+            .then(response => renderTodoCard());
     },
 
-    newTodo(action, params, todoTitle, todoAddress, todoTasks, callback) {
+    newTodo(action, params, callback) {
         $.post(action, params, function(todo) {
             var todo = new Todo(
-                todo.todo_id,
-                todo.parent_id,
-                todo.title = todoTitle,
-                todo.description,
-                todo.address = todoAddress,
-                todo.done,
-                todo.duedate,
-                todo.tasks = todoTasks
+                todo.todo_id = todo.id,
+                todo.parent_id = todo.parent_id,
+                todo.title = todo.title,
+                todo.description = todo.description,
+                todo.address = todo.address,
+                todo.done = todo.done,
+                todo.duedate = todo.duedate,
+                todo.tasks = todo.tasks
             )
+            debugger
             renderParentPage(todo);
         })
     },
 
-    loadTodo(parentId, todoId, callback) {
+    loadTodo(parentId, todoId, address, tasks, description, done, duedate, title, callback) {
         $.get("/parents/" + (parentId) + "/todos/" + (todoId), function(todo) {
             var todo = new Todo(
                 todo.todo_id = todoId,
                 todo.parent_id = parentId,
-                todo.title,
-                todo.description,
-                todo.address,
-                todo.done,
-                todo.duedate,
-                todo.tasks
+                todo.title = title,
+                todo.descriptio = description,
+                todo.address = address,
+                todo.done = done,
+                todo.duedate = duedate,
+                todo.tasks = tasks
             )
             renderTodoCard(todo);
         })
@@ -179,7 +182,7 @@ Todo.prototype.getAddressString = function(todo) {
             height="150" 
             frameborder="0" 
             style="border:0" 
-            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCkIkw32ps5odw1KNV7wtdteXOyk1B69RE&q=${this.address}" allowfullscreen
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCkIkw32ps5odw1KNV7wtdteXOyk1B69RE&q=${todo.address}" allowfullscreen
         />
     `);
 }

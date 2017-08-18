@@ -38,15 +38,7 @@
 
 
 <div class="todo-addtask">
-<% if @current_todo != nil %>
-  <%= form_for([current_user, @current_todo, @task], :html => {:id => 'addtask-form'}) do |f| %>
-    <%= f.text_field :title, :placeholder => 'what needs to get done?', size: 22 %>
-    <%= f.hidden_field :parent_id, :value => current_user.id %>
-    <%= f.hidden_field :todo_id, :value => @current_todo.id %>
-    <%= f.submit 'add task', :class => 'btn btn-primary btn-sm', :id => 'submit-task' %>
-  <% end %>
-<% end %>
-  <br>
+
 </div>
 
 

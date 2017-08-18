@@ -27,6 +27,12 @@
           <%= t.hidden_field :todo_id, :value => @todo.id %>
         <% end %>
         <br>
+        <%= f.fields_for :tasks, @todo.tasks.new do |t| %>
+          <%= t.text_field :title, :placeholder => 'add a todo', size: 22 %>
+          <%= t.hidden_field :parent_id, :value => @parent.id %>
+          <%= t.hidden_field :todo_id, :value => @todo.id %>
+        <% end %>
+        <br>
         <%= f.submit "add todo", :id => 'todo-submit', :class => 'btn btn-primary' %>
       <% end %>
     </div>
@@ -38,7 +44,7 @@
     <% @todos.each do |todo| %>
       <% if todo.done == false %>
         <strong>
-          <a href="/parents/<%= @parent.id %>/todos/<%= todo.id %>" 
+           <a href="/parents/<%= @parent.id %>/todos/<%= todo.id %>" 
             class="load_todo" 
             data-todoid="<%= todo.id %>" 
             data-parentid="<%= current_user.id %>" 
@@ -58,4 +64,4 @@
     </div>
   </div>
 
-<%= render "todo" if @current_todo != nil %>
+<%= render "todo" if @tasks != nil && @current_todo != nil %>
