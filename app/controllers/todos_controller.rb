@@ -1,3 +1,4 @@
+require 'pry'
 class TodosController < ApplicationController
   before_action :logged_in?
 
@@ -28,7 +29,7 @@ class TodosController < ApplicationController
     find_todo(@todo)
     @tasks = current_user.tasks.where(todo_id: params[:id])
     # @task = @todo.tasks.build
-    # render :json => @todo
+    render :json => @todo
   end
 
   def update

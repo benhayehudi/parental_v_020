@@ -102,13 +102,12 @@ $(document).ready(function() {
         const parentId = this.dataset.parentid
         const todoId = this.dataset.todoid
         const address = this.dataset.address
-        const tasks = this.dataset.tasks
         const description = this.dataset.description
         const done = this.dataset.done
         const duedate = this.dataset.duedate
         const title = this.dataset.title
 
-        TodoApiService.loadTodo(parentId, todoId, address, tasks, description, done, duedate, title, renderTodoCard);
+        TodoApiService.loadTodo(parentId, todoId, address, description, done, duedate, title, renderTodoCard);
     })
 })
 
@@ -137,17 +136,17 @@ const TodoApiService = {
         })
     },
 
-    loadTodo(parentId, todoId, address, tasks, description, done, duedate, title, callback) {
+    loadTodo(parentId, todoId, callback) {
         $.get("/parents/" + (parentId) + "/todos/" + (todoId), function(todo) {
             var todo = new Todo(
                 todo.todo_id = todoId,
                 todo.parent_id = parentId,
-                todo.title = title,
-                todo.descriptio = description,
-                todo.address = address,
-                todo.done = done,
-                todo.duedate = duedate,
-                todo.tasks = tasks
+                todo.title,
+                todo.descriptio,
+                todo.address,
+                todo.done,
+                todo.duedate,
+                todo.tasks
             )
             renderTodoCard(todo);
         })
@@ -198,17 +197,12 @@ Todo.prototype.getDescriptionString = function(todo) {
 }
 
 Todo.prototype.getTasksString = function(todo) {
-    if (!todo.tasks) {
-        return `no tasks for this todo yet`;
-    } else {
-        Array.from(todo.tasks).forEach(function(task) {
-            if (task.done == false) {
-                return `${task.title}<br>`;
-            } else {
-                return '';
-            }
-        })
-    }
+    debugger
+    todo.tasks.map(todo => todo.title)
+    return (`
+        <h4>your tasks</h4>
+        ${todo.title}
+    `)
 }
 
 Todo.prototype.renderTodoListing = function(todo) {
