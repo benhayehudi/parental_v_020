@@ -18,10 +18,6 @@ class Todo {
     }
 }
 
-Todo.error = function(response) {
-    alert("Please enter a valid todo.", response)
-}
-
 // DOM Manipulation Functions
 function renderTodoCard() {
     $('div.todo-content').html("");
@@ -53,7 +49,6 @@ function renderParentPage() {
     $("div.todo-taskdone").css("display", "hide");
     $("div.todo-done").css("display", "hide");
     $("input[type=submit]").removeAttr("disabled")
-    location.reload();
 }
 
 // Event Listeners 
@@ -76,36 +71,32 @@ $(document).ready(function() {
 
     $("#duedate-form").on("submit", function(e) {
         e.preventDefault()
-        var $form = $(this);
-        var action = $form.attr("action");
-        var params = $form.serialize();
+        var action = $(this).attr("action");
+        var params = $(this).serialize();
 
         TodoApiService.updateTodo(action, params, renderTodoCard)
     })
 
     $("#addtask-form").on("submit", function(e) {
         e.preventDefault()
-        var $form = $(this);
-        var action = $form.attr("action");
-        var params = $form.serialize();
+        var action = $(this).attr("action");
+        var params = $(this).serialize();
 
         TodoApiService.updateTodo(action, params, renderTodoCard)
     })
 
     $("#tododone-form").on("submit", function(e) {
         e.preventDefault()
-        var $form = $(this);
-        var action = $form.attr("action");
-        var params = $form.serialize();
+        var action = $(this).attr("action");
+        var params = $(this).serialize();
 
         TodoApiService.updateTodo(action, params, renderParentPage)
     })
 
     $("form#new_todo").on("submit", function(e) {
         e.preventDefault()
-        var $form = $(this);
-        var action = $form.attr("action");
-        var params = $form.serialize();
+        var action = $(this).attr("action");
+        var params = $(this).serialize();
         todo = new Todo();
         todo.title = $('input[name="todo[title]"').val();
         todo.address = $('input[name="todo[address]"').val();
@@ -179,10 +170,9 @@ Todo.prototype.getDescriptionString = function() {
         return '';
     }
     return (`
-        <h4>some info:</h4><br>` +
-        this.description
-
-        `<br><br>
+        <h4>some info:</h4>
+        ${this.description}
+        <br><br>
     `);
 }
 
@@ -200,7 +190,6 @@ Todo.prototype.getTasksString = function() {
     }
 }
 
-// Todo.prototype render DOM elements functions
 Todo.prototype.renderTodoListing = function() {
     return (`
         <div id="todoid-` + this.id + `">
@@ -220,20 +209,3 @@ Todo.prototype.renderTodoListing = function() {
         </div>
     `);
 }
-
-// Todo.prototype.renderTodoCard = function() {
-//     const headerString = this.getHeaderString()
-//     const addressString = this.getAddressString()
-//     const descriptionString = this.getDecriptionString()
-//     const tasksString = this.getTasksString()
-//     const duedateString = this.getDueDateString()
-//     const tododoneString = this.getTodoDoneString()
-
-//     return (`
-//         <div>
-//             <h1>${this.name}</h1>
-//             <p>${descriptionString}</p>
-//             <p>${addressString}</p>
-//         </div>
-//     `);
-// }

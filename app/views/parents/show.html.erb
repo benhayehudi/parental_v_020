@@ -34,7 +34,7 @@
     <br><br>
 
     <h4>your todo list</h4>
-    <div id="todo-list">
+    <div class="todo-list">
     <% @todos.each do |todo| %>
       <% if todo.done == false %>
         <strong><a href="/parents/<%= @parent.id %>/todos/<%= todo.id %>" class="load_todo" data-todoid="<%= todo.id %>" data-parentid="<%= current_user.id %>"><%= todo.title %></a></strong>
