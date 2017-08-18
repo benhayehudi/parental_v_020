@@ -52,120 +52,122 @@ function renderParentPage() {
 
 // Event Listeners 
 $(document).ready(function() {
-            $("#address-form").on("submit", function(e) {
-                e.preventDefault()
-                var action = $(this).attr("action");
-                var params = $(this).serialize();
+    $("#address-form").on("submit", function(e) {
+        e.preventDefault()
+        var action = $(this).attr("action");
+        var params = $(this).serialize();
 
-                TodoApiService.updateTodo(action, params, renderTodoCard);
+        TodoApiService.updateTodo(action, params, renderTodoCard);
+    })
+
+    $("#description-form").on("submit", function(e) {
+        e.preventDefault()
+        var action = $(this).attr("action");
+        var params = $(this).serialize();
+
+        TodoApiService.updateTodo(action, params, renderTodoCard);
+    })
+
+    $("#duedate-form").on("submit", function(e) {
+        e.preventDefault()
+        var action = $(this).attr("action");
+        var params = $(this).serialize();
+
+        TodoApiService.updateTodo(action, params, renderTodoCard)
+    })
+
+    $("#addtask-form").on("submit", function(e) {
+        e.preventDefault()
+        var action = $(this).attr("action");
+        var params = $(this).serialize();
+
+        TodoApiService.updateTodo(action, params, renderTodoCard)
+    })
+
+    $("#tododone-form").on("submit", function(e) {
+        e.preventDefault()
+        var action = $(this).attr("action");
+        var params = $(this).serialize();
+
+        TodoApiService.updateTodo(action, params, renderParentPage)
+    })
+
+    $("form#new_todo").on("submit", function(e) {
+        e.preventDefault()
+        var action = $(this).attr("action");
+        var params = $(this).serialize();
+        todo = new Todo();
+        todo.title = $('input[name="todo[title]"').val();
+        todo.address = $('input[name="todo[address]"').val();
+        todo.tasks = $('input[name="todo[tasks_attributes][0][title]"').val();
+
+        TodoApiService.newTodo(action, params, renderParentPage);
+    })
+
+    $('a.load_todo').on("click", function(e) {
+        e.preventDefault()
+        const parentId = this.dataset.parentid
+        const todoId = this.dataset.todoid
+
+        TodoApiService.loadTodo(parentId, todoId, renderTodoCard(todo));
+    })
+})
+
+
+// API SERVICE 
+const TodoApiService = {
+
+    updateTodo(action, params, callback) {
+        $.post('#{:controller => "todos_controller", :action => "show"}', action, params)
+            .success($('div.todo-content').empty())
+            .then(response => callback());
+    },
+
+    newTodo(action, params, callback) {
+        $.post(action, params)
+            .success(response => callback());
+    },
+
+    loadTodo(parentId, todoId, callback) {
+        $.get("/parents/" + (parentId) + "/todos/" + (todoId), function(todo) {
+                var todo = new Todo(
+                    todo.todo_id = todoId,
+                    todo.parent_id = parentId,
+                    todo.title,
+                    todo.description,
+                    todo.address,
+                    todo.done,
+                    todo.duedate,
+                    todo.tasks
+                )
+                debugger
             })
-
-            $("#description-form").on("submit", function(e) {
-                e.preventDefault()
-                var action = $(this).attr("action");
-                var params = $(this).serialize();
-
-                TodoApiService.updateTodo(action, params, renderTodoCard);
-            })
-
-            $("#duedate-form").on("submit", function(e) {
-                e.preventDefault()
-                var action = $(this).attr("action");
-                var params = $(this).serialize();
-
-                TodoApiService.updateTodo(action, params, renderTodoCard)
-            })
-
-            $("#addtask-form").on("submit", function(e) {
-                e.preventDefault()
-                var action = $(this).attr("action");
-                var params = $(this).serialize();
-
-                TodoApiService.updateTodo(action, params, renderTodoCard)
-            })
-
-            $("#tododone-form").on("submit", function(e) {
-                e.preventDefault()
-                var action = $(this).attr("action");
-                var params = $(this).serialize();
-
-                TodoApiService.updateTodo(action, params, renderParentPage)
-            })
-
-            $("form#new_todo").on("submit", function(e) {
-                e.preventDefault()
-                var action = $(this).attr("action");
-                var params = $(this).serialize();
-                todo = new Todo();
-                todo.title = $('input[name="todo[title]"').val();
-                todo.address = $('input[name="todo[address]"').val();
-                todo.tasks = $('input[name="todo[tasks_attributes][0][title]"').val();
-
-                TodoApiService.newTodo(action, params, renderParentPage);
-            })
-
-            $('a.load_todo').on("click", function(e) {
-                e.preventDefault()
-                const parentId = this.dataset.parentid
-                const todoId = this.dataset.todoid
-
-                TodoApiService.loadTodo(parentId, todoId, renderTodoCard);
-            })
+            .success(response => callback());
+    }
+}
 
 
-            // API SERVICE 
-            const TodoApiService = {
+// Todo.prototype Functions
+Todo.prototype.getHeaderString = function() {
+    return `<h3 class="panel-title">${todo.title}</h3>`;
+}
 
-                updateTodo(action, params, callback) {
-                    $.post('#{:controller => "todos_controller", :action => "show"}', action, params)
-                        .success($('div.todo-content').empty())
-                        .then(response => callback());
-                },
+Todo.prototype.getDueDateString = function() {
+    return `<h4>what do you need to do?</h4>`;
+}
 
-                newTodo(action, params, callback) {
-                    $.post(action, params)
-                        .success(response => callback());
-                },
+Todo.prototype.getTodoDoneString = function() {
+    return `<h4>are you done?</h4>`;
+}
 
-                loadTodo(parentId, todoId, callback) {
-                    $.get("/parents/" + (parentId) + "/todos/" + (todoId), function(todo) {
-                            var todo = new Todo(
-                                todo.todo_id = todoId,
-                                todo.parent_id = parentId,
-                                todo.title,
-                                todo.description,
-                                todo.address,
-                                todo.done,
-                                todo.duedate,
-                                todo.tasks
-                            )
-                            debugger
-                        })
-                        .success(response => callback());
-                }
-            }
-
-            // Todo.prototype Functions
-            Todo.prototype.getHeaderString = function() {
-                return `<h3 class="panel-title">${todo.title}</h3>`;
-            }
-
-            Todo.prototype.getDueDateString = function() {
-                return `<h4>what do you need to do?</h4>`;
-            }
-
-            Todo.prototype.getTodoDoneString = function() {
-                return `<h4>are you done?</h4>`;
-            }
-
-            Todo.prototype.getAddressString = function() {
-                if (todo.address == null || todo.address == "") {
-                    return (`
+Todo.prototype.getAddressString = function() {
+    if (todo.address == null || todo.address == "") {
+        return (`
         <div class="panel-body">
         no address supplied<br>
         `);
-                }
-                return (`
+    }
+    return (`
         <iframe 
             width="200" 
             height="150" 
@@ -174,35 +176,35 @@ $(document).ready(function() {
             src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCkIkw32ps5odw1KNV7wtdteXOyk1B69RE&q=${this.address}" allowfullscreen
         />
     `);
-            }
+}
 
-            Todo.prototype.getDescriptionString = function() {
-                if (todo.description == null) {
-                    return '';
-                }
-                return (`
+Todo.prototype.getDescriptionString = function() {
+    if (todo.description == null) {
+        return '';
+    }
+    return (`
         <h4>some info:</h4>
         ${todo.description}
         <br><br>
     `);
-            }
+}
 
-            Todo.prototype.getTasksString = function() {
-                if (!todo.tasks) {
-                    return `no tasks for this todo yet`;
-                } else {
-                    Array.from(todo.tasks).forEach(function(task) {
-                        if (task.done == false) {
-                            return `${task.title}<br>`;
-                        } else {
-                            return '';
-                        }
-                    })
-                }
+Todo.prototype.getTasksString = function() {
+    if (!todo.tasks) {
+        return `no tasks for this todo yet`;
+    } else {
+        Array.from(todo.tasks).forEach(function(task) {
+            if (task.done == false) {
+                return `${task.title}<br>`;
+            } else {
+                return '';
             }
+        })
+    }
+}
 
-            Todo.prototype.renderTodoListing = function() {
-                return (`
+Todo.prototype.renderTodoListing = function() {
+    return (`
         <div id="todoid-${this.id}">
             <strong>
                 <a href="/parents/${this.parent_id}/todos/${this.id}" 
@@ -212,4 +214,4 @@ $(document).ready(function() {
             <br>
         </div>
     `);
-            }
+}
