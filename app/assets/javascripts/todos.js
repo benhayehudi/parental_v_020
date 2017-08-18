@@ -101,11 +101,6 @@ $(document).ready(function() {
         e.preventDefault()
         const parentId = this.dataset.parentid
         const todoId = this.dataset.todoid
-        const address = this.dataset.address
-        const description = this.dataset.description
-        const done = this.dataset.done
-        const duedate = this.dataset.duedate
-        const title = this.dataset.title
 
         TodoApiService.loadTodo(parentId, todoId, address, description, done, duedate, title, renderTodoCard);
     })
@@ -142,7 +137,7 @@ const TodoApiService = {
                 todo.todo_id = todoId,
                 todo.parent_id = parentId,
                 todo.title,
-                todo.descriptio,
+                todo.description,
                 todo.address,
                 todo.done,
                 todo.duedate,
