@@ -102,7 +102,7 @@ $(document).ready(function() {
         const parentId = this.dataset.parentid
         const todoId = this.dataset.todoid
 
-        TodoApiService.loadTodo(parentId, todoId, address, description, done, duedate, title, renderTodoCard);
+        TodoApiService.loadTodo(parentId, todoId, renderTodoCard);
     })
 })
 
@@ -192,7 +192,6 @@ Todo.prototype.getDescriptionString = function(todo) {
 }
 
 Todo.prototype.getTasksString = function(todo) {
-    debugger
     todo.tasks.map(todo => todo.title)
     return (`
         <h4>your tasks</h4>
