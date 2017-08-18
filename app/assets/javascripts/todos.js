@@ -133,7 +133,6 @@ const TodoApiService = {
                 todo.duedate = todo.duedate,
                 todo.tasks = todo.tasks
             )
-            debugger
             renderParentPage(todo);
         })
     },
