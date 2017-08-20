@@ -36,11 +36,7 @@ class TodosController < ApplicationController
     find_todo(@todo)
     @todo.update(todo_params)
     @todo.save
-    if @todo.done == false
-      redirect_to parent_todo_path(@todo)
-    else
-      redirect_to parent_todo_path(@todo)
-    end
+    render :json => @todo
   end
 
   def destroy

@@ -34,6 +34,7 @@ function renderTodoCard(todo) {
     $("div.todo-done").css("display", "block");
     $("div.todo-done").prepend(todo.getTodoDoneString(todo));
     $("input[type=submit]").removeAttr("disabled");
+    debugger
 }
 
 function renderParentPage(todo) {
@@ -49,46 +50,6 @@ function renderParentPage(todo) {
 
 // Event Listeners 
 $(document).ready(function() {
-    $("#address-form").on("submit", function(e) {
-        e.preventDefault()
-        var action = $(this).attr("action");
-        var params = $(this).serialize();
-
-        TodoApiService.updateTodo(action, params, renderTodoCard);
-    })
-
-    $("#description-form").on("submit", function(e) {
-        e.preventDefault()
-        var action = $(this).attr("action");
-        var params = $(this).serialize();
-
-        TodoApiService.updateTodo(action, params, renderTodoCard);
-    })
-
-    $("#duedate-form").on("submit", function(e) {
-        e.preventDefault()
-        var action = $(this).attr("action");
-        var params = $(this).serialize();
-
-        TodoApiService.updateTodo(action, params, renderTodoCard)
-    })
-
-    $("#addtask-form").on("submit", function(e) {
-        e.preventDefault()
-        var action = $(this).attr("action");
-        var params = $(this).serialize();
-
-        TodoApiService.updateTodo(action, params, renderTodoCard)
-    })
-
-    $("#tododone-form").on("submit", function(e) {
-        e.preventDefault()
-        var action = $(this).attr("action");
-        var params = $(this).serialize();
-
-        TodoApiService.updateTodo(action, params, renderParentPage)
-    })
-
     $("form#new_todo").on("submit", function(e) {
         e.preventDefault()
         var action = $(this).attr("action");
@@ -109,12 +70,6 @@ $(document).ready(function() {
 
 // API SERVICE 
 const TodoApiService = {
-
-    updateTodo(action, params, callback) {
-        $.post(action, params)
-            .then(response => renderTodoCard());
-    },
-
     newTodo(action, params, callback) {
         $.post(action, params, function(todo) {
             var todo = new Todo(
@@ -192,11 +147,12 @@ Todo.prototype.getDescriptionString = function(todo) {
 }
 
 Todo.prototype.getTasksString = function(todo) {
-    todo.tasks.map(todo => todo.title)
-    return (`
+    $.each(todo.tasks, function(index, task) {
+        return (`
         <h4>your tasks</h4>
-        ${todo.title}
-    `)
+        ${task.title}<br>
+        `)
+    });
 }
 
 Todo.prototype.renderTodoListing = function(todo) {
