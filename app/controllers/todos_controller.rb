@@ -36,7 +36,7 @@ class TodosController < ApplicationController
     find_todo(@todo)
     @todo.update(todo_params)
     @todo.save
-    render :json => @todo
+    # render :json => @todo
   end
 
   def destroy

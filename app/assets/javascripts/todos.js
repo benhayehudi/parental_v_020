@@ -1,10 +1,3 @@
-// Remove Globals 
-// Use TodoApiService
-// Seperation of Concerns in your event listeners
-// Use prototype functions correctly for when you need access to the constructors (this) attributes
-// Use template literals `${}`
-// No Repeated Code
-
 class Todo {
     constructor(id, parent_id, title, description, address, done, duedate, tasks) {
         this.title = title
@@ -34,7 +27,6 @@ function renderTodoCard(todo) {
     $("div.todo-done").css("display", "block");
     $("div.todo-done").prepend(todo.getTodoDoneString(todo));
     $("input[type=submit]").removeAttr("disabled");
-    debugger
 }
 
 function renderParentPage(todo) {
@@ -147,23 +139,23 @@ Todo.prototype.getDescriptionString = function(todo) {
 }
 
 Todo.prototype.getTasksString = function(todo) {
-    $.each(todo.tasks, function(index, task) {
-        return (`
+    var nestedTitle = todo.tasks.map(task => task.title)
+    return (`
         <h4>your tasks</h4>
-        ${task.title}<br>
+        ${nestedTitle.toString()}
         `)
-    });
+
 }
 
 Todo.prototype.renderTodoListing = function(todo) {
-    return (`
-        <div id="todoid-${todo.id}">
+    return (` 
+        <div id = "todoid-${todo.id}" >
             <strong>
-                <a href="/parents/${todo.parent_id}/todos/${todo.id}" 
-                class="todo-id-${todo.id}">${todo.title}
-                </a>
-            </strong>
-            <br>
+                <a href = "/parents/${todo.parent_id}/todos/${todo.id}"
+                class = "todo-id-${todo.id}" > $ { todo.title } <
+                /a> 
+            </strong> 
+            <br />
         </div>
     `);
 }

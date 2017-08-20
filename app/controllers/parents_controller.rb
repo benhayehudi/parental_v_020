@@ -11,7 +11,7 @@ class ParentsController < ApplicationController
     @todo = @parent.todos.build
     @todos = all_todos(@parent)
     @tasks = current_user.tasks.where(todo_id: params[:id])
-    @task = @todo.tasks.build
+    @task = @todo.tasks.new
   end
 
   private
