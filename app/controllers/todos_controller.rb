@@ -1,3 +1,4 @@
+require 'pry'
 class TodosController < ApplicationController
   before_action :logged_in?
 
@@ -24,10 +25,10 @@ class TodosController < ApplicationController
     end
   end
 
-  def show
+  def show     
     find_todo(@todo)
     @tasks = current_user.tasks.where(todo_id: params[:id])
-    @task = @todo.tasks.build
+    # @task = @todo.tasks.build
     render :json => @todo
   end
 
@@ -35,11 +36,7 @@ class TodosController < ApplicationController
     find_todo(@todo)
     @todo.update(todo_params)
     @todo.save
-    if @todo.done == false
-      redirect_to parent_todo_path(@todo)
-    else
-      redirect_to parent_todo_path(@todo)
-    end
+    # render :json => @todo
   end
 
   def destroy

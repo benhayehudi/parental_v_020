@@ -6,13 +6,12 @@ class ParentsController < ApplicationController
   end
   
   def show
-    @current_todo = find_todo(@current_todo) || @current_todo = current_user.todos.first
+    @current_todo = find_todo(params[:id]) || current_user.todos.last
     @parent = current_user
     @todo = @parent.todos.build
     @todos = all_todos(@parent)
     @tasks = current_user.tasks.where(todo_id: params[:id])
-    @task = @todo.tasks.build
-    latetodos = @todos.late_todos
+    @task = @todo.tasks.new
   end
 
   private

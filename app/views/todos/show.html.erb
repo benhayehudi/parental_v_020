@@ -33,12 +33,7 @@
 </div>
 
 <div class="todo-addtask">
-<%= form_for([current_user, @todo, @task]) do |f| %>
-  <%= f.text_field :title, :placeholder => 'what needs to get done?', size: 22 %>
-  <%= f.hidden_field :parent_id, :value => current_user.id %>
-  <%= f.hidden_field :todo_id, :value => @todo.id %>
-  <%= f.submit 'add task', :class => 'btn btn-primary btn-sm' %>
-<% end %>
+
 </div>
 
 <div class="todo-taskdone">

@@ -62,3 +62,4 @@ gem 'rails_12factor', group: :production
 gem 'sparkpost'
 gem 'active_model_serializers'
 gem 'jquery-rails'
+gem 'pry'
